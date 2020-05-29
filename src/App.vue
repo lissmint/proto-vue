@@ -1,13 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Sidebar />
+    <router-view />
   </div>
 </template>
 
+<script>
+import Sidebar from "@/components/Sidebar";
+
+export default {
+  sockets: {
+    t2wlj: {
+      connect: function() {
+        console.log("socket connected");
+      },
+      disconnect: function(){
+        console.log("socket connected");
+      },
+      customEmit: function(data) {
+        console.log(
+          'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+        );
+      },
+    },
+  },
+  components: {
+    Sidebar,
+  },
+  mounted() {
+    // setInterval(this.$store.commit('isActive'), 1);
+  },
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -1,0 +1,186 @@
+@font-face {
+    font-family: Acript;
+    src: url(./fonts/Acript\ Silicon\ Valley.ttf);
+}
+
+h1 {
+    font-family: Acript;
+}
+
+.item {
+    font-variant: small-caps;
+    font-size: 14px;
+}
+
+.w3-tag.w3-yellow {
+    margin: 1px 1px;
+    float: right;
+}
+.w3-tag.w3-teal {
+    margin: 1px 1px;
+    float: right;
+}
+
+.w3-table, .w3-table-all {
+    width: 900px;
+}
+
+.slidecontainer {
+    width: 900px; /* Width of the outside container */
+}
+  
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #009688!important; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #009688!important; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.w3-input.w3-teal{
+    width: auto;
+}
+
+.mi-heatmap {
+    display: inline-block;
+}
+
+.number-field {
+  width: 400px;
+  padding: 3px 0px;
+}
+
+.mini-slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 200px; /* Full-width */
+  height: 15px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.mini-slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+.mini-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 12px; /* Set a specific slider handle width */
+  height: 22px; /* Slider handle height */
+  background: #009688!important; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.mini-slider::-moz-range-thumb {
+  width: 12px; /* Set a specific slider handle width */
+  height: 22px; /* Slider handle height */
+  background: #009688!important; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.w3-tag.w3-teal.range-val {
+  width: 70px;
+  height: 22px;
+  margin-left: 5px;
+  float: none;
+}
+
+.slidecontainer {
+  max-width: 200px;
+}
+
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: #009688;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: #009688;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.w3-ul li {
+  padding-right: 45px;
+}
