@@ -29,6 +29,9 @@ export default {
   components: {
     Sidebar,
   },
+  created(){
+    this.$store.dispatch('connectToSockets')
+  },
   mounted() {
     // setInterval(this.$store.commit('isActive'), 1);
   },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header title="Tacotron" />
+    <NHeader title="Tacotron" />
     <div class="w3-container model">
         <h2>Input sentence and Run</h2>
     </div>

@@ -27,14 +27,17 @@
         v-for="service in tts"
         :key="service.url"
         :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
       >
+        <span @click="setService(service)">
+          {{ service.title }}
+          <span
+            class="w3-tag w3-small w3-teal"
+            v-for="(servicetag, i) in service.tags"
+            :key="i"
+            >{{ servicetag }}</span
+          >
+        </span>
+      </router-link>
     </div>
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -279,6 +282,9 @@ export default {
           ""
         );
       }
+    },
+    setService(service) {
+      this.$store.commit("setSelected", service);
     },
   },
   mounted() {},

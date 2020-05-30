@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Header title="Welcome!" />
+    <NHeader title="Welcome!" />
     <div id="Welcome!" class="w3-container model">
       <div>
         <h3>Here you can find prototype models presented in test inference mode.</h3>
