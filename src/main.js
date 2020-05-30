@@ -3,9 +3,11 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import VueSocketIO from "vue-socket.io";
+import Header from "./components/Header"
 
 Vue.config.productionTip = false;
 
+Vue.component('Header', Header)
 //firstsocket
 Vue.use(
   new VueSocketIO({

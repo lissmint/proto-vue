@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Sidebar />
+    <div class="w3-main" style="margin-left:350px">
     <router-view />
+    </div>
   </div>
 </template>
 
@@ -10,7 +12,7 @@ import Sidebar from "@/components/Sidebar";
 
 export default {
   sockets: {
-    t2wlj: {
+    t2w: {
       connect: function() {
         console.log("socket connected");
       },
@@ -33,7 +35,7 @@ export default {
 };
 </script>
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -52,5 +54,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
