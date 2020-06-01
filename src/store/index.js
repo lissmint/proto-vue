@@ -63,13 +63,12 @@ export default new Vuex.Store({
       let services = store.getters.allServices.map((a) => ({ ...a }));
       for (let s in services) {
         services[s].ws = new WebSocket(
-          // `ws://localhost:8080/services/${services[s].url}/`
-          "wss://echo.websocket.org"
+          `ws://localhost:80/services/${services[s].url}/`
+          // "wss://echo.websocket.org"
         );
 
         services[s].ws.onopen = function(event) {
-          console.log("[open] Соединение установлено");
-          console.log("Отправляем данные на сервер. id сервиса = " + s);
+          console.log(`[open] Соединение ${services[s].url} установлено`);
           store.commit("setActive", s);
         };
 
@@ -80,12 +79,12 @@ export default new Vuex.Store({
         services[s].ws.onclose = function(event) {
           if (event.wasClean) {
             console.log(
-              `[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`
+              `[close] Соединение ${services[s].url} закрыто чисто, код=${event.code} причина=${event.reason}`
             );
           } else {
             // например, сервер убил процесс или сеть недоступна
             // обычно в этом случае event.code 1006
-            console.log("[close] Соединение прервано");
+            console.log("[close] Соединение прервано, code = " + event.code);
           }
         };
 
