@@ -1,6 +1,5 @@
 <template>
   <div :id="name" class="w3-hide w3-white w3-card-4">
-    <div v-if="family.length">
       <router-link
         class="item w3-bar-item w3-button w3-border-bottom"
         v-for="service in family"
@@ -17,10 +16,6 @@
           >
         </div>
       </router-link>
-    </div>
-    <div class="item w3-bar-item w3-button w3-border-bottom" v-else>
-      <span>No available services</span>
-    </div>
   </div>
 </template>
 

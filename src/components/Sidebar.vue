@@ -11,83 +11,94 @@
       Close &times;
     </button>
     <div class="w3-container w3-border-bottom w3-center">
-      <router-link to="/"><h1 class="w3-wide"><b>NAINT</b></h1></router-link> 
+      <router-link to="/"
+        ><h1 class="w3-wide"><b>NAINT</b></h1></router-link
+      >
     </div>
 
     <!--  Step 1. Add new tab and item to menu. -->
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('tts')"
+      v-if="tts.length"
     >
       Text to Speech <i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="tts" :family="tts" />
+    <NavLinks name="tts" :family="tts" v-if="tts.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('asr')"
+      v-if="asr.length"
     >
       Automatic Speech Recognition
       <i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="asr" :family="asr" />
+    <NavLinks name="asr" :family="asr" v-if="asr.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('qa')"
+      v-if="qa.length"
     >
       Question Answering <i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="qa" :family="qa" />
+    <NavLinks name="qa" :family="qa" v-if="qa.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('nmt')"
+      v-if="nmt.length"
     >
       Neural Machine Translation
       <i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="nmt" :family="nmt" />
+    <NavLinks name="nmt" :family="nmt" v-if="nmt.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('mig')"
+      v-if="mig.length"
     >
       Mutial Information GuCh<i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="mig" :family="mig" />
+    <NavLinks name="mig" :family="mig" v-if="mig.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('mlm')"
+      v-if="mlm.length"
     >
       MaLaMEDA MI<i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="mlm" :family="mlm" />
+    <NavLinks name="mlm" :family="mlm" v-if="mlm.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('semsim')"
+      v-if="semsim.length"
     >
       Sentence Embedding Similarity<i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="semsim" :family="semsim" />
+    <NavLinks name="semsim" :family="semsim" v-if="semsim.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('spp')"
+      v-if="spp.length"
     >
       Syntax Extraction from Attention Layers<i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="spp" :family="spp" />
+    <NavLinks name="spp" :family="spp" v-if="spp.length" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('tg')"
+      v-if="tg.length"
     >
       Trump Tweet Generator <i class="fa fa-caret-down"></i>
     </div>
-    <NavLinks name="tg" :family="tg" />
+    <NavLinks name="tg" :family="tg" v-if="tg.length" />
   </div>
 </template>
 

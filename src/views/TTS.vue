@@ -2,9 +2,6 @@
   <div>
     <NHeader title="Tacotron" />
     <div class="w3-container model">
-        <h2>Input sentence and Run</h2>
-    </div>
-    <div id="Tacotron 2.1 EN LJ" class="w3-container model">
       <h2>Input sentence and Run</h2>
       <p>
         <textarea
@@ -54,3 +51,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'tts-page',
+  computed:{
+    service(){
+      return this.$store.getters.allServices.find(s => s.url === this.$route.params.id)
+    }
+  }
+}
+</script>
