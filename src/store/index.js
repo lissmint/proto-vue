@@ -1,25 +1,28 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import socket from './socket'
+import Vue from "vue";
+import Vuex from "vuex";
+// import assignWebSocketListeners from "@/assets/assignListeners"
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    changes: 0,
     services: [
       {
         title: "Tacotron 2.1",
         familyName: "tts",
-        active: true,
+        active: false,
         tags: ["EN", "LJ"],
         url: "t2w",
         ws: {},
-        options: {},
+        options: {
+          maxLength: 140,
+        },
       },
       {
         title: "Tacotron 2.1 + WJ",
         familyName: "tts",
-        active: true,
+        active: false,
         tags: ["EN", "LJ", "BIG"],
         url: "t2wlj",
         ws: {},
@@ -28,51 +31,78 @@ export default new Vuex.Store({
       {
         title: "Wave2Letter+",
         familyName: "asr",
-        active: true,
+        active: false,
         tags: ["LibriSpeech", "EN"],
         url: "w2l",
         ws: {},
         options: {},
       },
     ],
-    selectedService: {},
   },
   mutations: {
-    // setActive(state) {
-    //   for (let service of state.services) {
-    //     service.active = !service.active;
-    //   }
-    // },
+    setActive(state, i) {
+      state.services[i].active = true;
+      state.changes++;
+    },
     setServices(state, services) {
       state.services = services.map((a) => ({ ...a }));
+      state.changes++;
     },
-    setSelected(state, service) {
-      debugger
-      state.selectedService = { ...service };
-      console.log(state.selectedService)
-    },
+    // setSelected(state, service) {
+    //   state.selectedService = { ...service };
+    //   console.log (state.selectedService)
+    // },
   },
   getters: {
-    activeServices: (state) => {
-      return state.services.filter((serv) => serv.active);
-    },
-    allServices: (state) => {
-      return state.services;
-    },
+    activeServices: (state) => state.services.filter((serv) => serv.active),
+    allServices: (state) => state.services,
+    changes: (state) => state.changes,
   },
   actions: {
-    connectToSockets(s) {
-      let services = s.getters.allServices.map((a) => ({ ...a }));
+    connectToSockets(store) {
+      let services = store.getters.allServices.map((a) => ({ ...a }));
       for (let s in services) {
         services[s].ws = new WebSocket(
-          `ws://localhost:8080/services/${services[s].url}/`
+          // `ws://localhost:8080/services/${services[s].url}/`
+          "wss://echo.websocket.org"
         );
+
+        services[s].ws.onopen = function(event) {
+          console.log("[open] Соединение установлено");
+          console.log("Отправляем данные на сервер. id сервиса = " + s);
+          store.commit("setActive", s);
+        };
+
+        services[s].ws.onmessage = function(event) {
+          console.log(`[message] Данные получены с сервера: ${event.data}`);
+        };
+
+        services[s].ws.onclose = function(event) {
+          if (event.wasClean) {
+            console.log(
+              `[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`
+            );
+          } else {
+            // например, сервер убил процесс или сеть недоступна
+            // обычно в этом случае event.code 1006
+            console.log("[close] Соединение прервано");
+          }
+        };
+
+        services[s].ws.onerror = function(error) {
+          console.log(`[error] ${error.message}`);
+        };
+        // setTimeout(function() {
+        //   if (services[s].ws.readyState === WebSocket.CLOSED) {
+        //     console.log(`${services[s].url} closed`);
+        //     services[s].active = false;
+        //   }
+        // }, 1000);
+        // тут проверяем доступность
       }
       console.log("sockets created");
-      s.commit("setServices", services);
+      store.commit("setServices", services);
     },
   },
-  modules: {
-    // socket
-  },
+  modules: {},
 });

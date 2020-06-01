@@ -11,7 +11,7 @@
       Close &times;
     </button>
     <div class="w3-container w3-border-bottom w3-center">
-      <h1 class="w3-wide"><b>NAINT</b></h1>
+      <router-link to="/"><h1 class="w3-wide"><b>NAINT</b></h1></router-link> 
     </div>
 
     <!--  Step 1. Add new tab and item to menu. -->
@@ -21,24 +21,8 @@
     >
       Text to Speech <i class="fa fa-caret-down"></i>
     </div>
-    <div id="tts" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in tts"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-      >
-        <span @click="setService(service)">
-          {{ service.title }}
-          <span
-            class="w3-tag w3-small w3-teal"
-            v-for="(servicetag, i) in service.tags"
-            :key="i"
-            >{{ servicetag }}</span
-          >
-        </span>
-      </router-link>
-    </div>
+    <NavLinks name="tts" :family="tts" />
+
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('asr')"
@@ -46,21 +30,7 @@
       Automatic Speech Recognition
       <i class="fa fa-caret-down"></i>
     </div>
-    <div id="asr" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in asr"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="asr" :family="asr" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -68,21 +38,7 @@
     >
       Question Answering <i class="fa fa-caret-down"></i>
     </div>
-    <div id="qa" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in qa"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="qa" :family="qa" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -91,42 +47,15 @@
       Neural Machine Translation
       <i class="fa fa-caret-down"></i>
     </div>
-    <div id="nmt" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in nmt"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="nmt" :family="nmt" />
+
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
       @click="showModels('mig')"
     >
       Mutial Information GuCh<i class="fa fa-caret-down"></i>
     </div>
-    <div id="mig" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in mig"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="mig" :family="mig" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -134,21 +63,7 @@
     >
       MaLaMEDA MI<i class="fa fa-caret-down"></i>
     </div>
-    <div id="mlm" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in mlm"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="mlm" :family="mlm" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -156,21 +71,7 @@
     >
       Sentence Embedding Similarity<i class="fa fa-caret-down"></i>
     </div>
-    <div id="semsim" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in semsim"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="semsim" :family="semsim" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -178,21 +79,7 @@
     >
       Syntax Extraction from Attention Layers<i class="fa fa-caret-down"></i>
     </div>
-    <div id="spp" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in spp"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="spp" :family="spp" />
 
     <div
       class="item w3-bar-item w3-button w3-border-bottom"
@@ -200,28 +87,18 @@
     >
       Trump Tweet Generator <i class="fa fa-caret-down"></i>
     </div>
-    <div id="tg" class="w3-hide w3-white w3-card-4">
-      <router-link
-        class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in tg"
-        :key="service.url"
-        :to="'/' + service.familyName + '/' + service.url"
-        >{{ service.title }}
-        <span
-          class="w3-tag w3-small w3-teal"
-          v-for="(servicetag, i) in service.tags"
-          :key="i"
-          >{{ servicetag }}</span
-        ></router-link
-      >
-    </div>
+    <NavLinks name="tg" :family="tg" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import NavLinks from "@/components/NavLinks";
 
 export default {
+  components: {
+    NavLinks,
+  },
   data: () => ({}),
   computed: {
     ...mapGetters(["activeServices"]),
@@ -254,22 +131,9 @@ export default {
     },
   },
   methods: {
-    w3_open() {
-      document.getElementById("mySidebar").style.display = "block";
-    },
     w3_close() {
       document.getElementById("mySidebar").style.display = "none";
     },
-
-    // openModel(modelName) {
-    //   var i;
-    //   var x = document.getElementsByClassName("model");
-    //   document.getElementById("model-name").innerText = modelName;
-    //   for (i = 0; i < x.length; i++) {
-    //     x[i].style.display = "none";
-    //   }
-    //   document.getElementById(modelName).style.display = "block";
-    // },
     showModels(familyName) {
       var x = document.getElementById(familyName);
       if (x.className.indexOf("w3-show") == -1) {
@@ -282,9 +146,6 @@ export default {
           ""
         );
       }
-    },
-    setService(service) {
-      this.$store.commit("setSelected", service);
     },
   },
   mounted() {},
