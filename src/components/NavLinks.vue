@@ -22,12 +22,12 @@
 <script>
 export default {
   name: "nav-links",
-  props: ["name", "family"],
-  methods: {
-    // setService(service) {
-    //   debugger;
-    //   this.$store.commit("setSelected", service);
-    // },
-  },
+  props: ["name", "family"]
 };
 </script>
+
+<style scoped>
+.w3-card-4{
+  box-shadow: none !important
+}
+</style>

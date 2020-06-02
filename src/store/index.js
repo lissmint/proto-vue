@@ -1,62 +1,34 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import serviceList from "@/assets/serviceList"
 // import assignWebSocketListeners from "@/assets/assignListeners"
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    changes: 0,
-    services: [
-      {
-        title: "Tacotron 2.1",
-        familyName: "tts",
-        active: false,
-        tags: ["EN", "LJ"],
-        url: "t2w",
-        ws: {},
-        options: {
-          maxLength: 140,
-        },
-      },
-      {
-        title: "Tacotron 2.1 + WJ",
-        familyName: "tts",
-        active: false,
-        tags: ["EN", "LJ", "BIG"],
-        url: "t2wlj",
-        ws: {},
-        options: {},
-      },
-      {
-        title: "Wave2Letter+",
-        familyName: "asr",
-        active: false,
-        tags: ["LibriSpeech", "EN"],
-        url: "w2l",
-        ws: {},
-        options: {},
-      },
-    ],
+    responses: 0,
+    services: serviceList
   },
   mutations: {
-    setActive(state, i) {
-      state.services[i].active = true;
-      state.changes++;
+    setActive(state, serviceIdx) {
+      if (this.state.services[serviceIdx].ws.readyState == 1) {
+        state.services[serviceIdx].active = true;
+      } else {
+        state.services[serviceIdx].active = false;
+      }
+      state.responses++
     },
-    setServices(state, services) {
-      state.services = services.map((a) => ({ ...a }));
-      state.changes++;
+    assignSockets(state, services) {
+      state.services.forEach((val, idx, arr) => {
+        arr[idx].ws = services[idx].ws;
+      });
     },
-    // setSelected(state, service) {
-    //   state.selectedService = { ...service };
-    //   console.log (state.selectedService)
-    // },
   },
   getters: {
     activeServices: (state) => state.services.filter((serv) => serv.active),
     allServices: (state) => state.services,
-    changes: (state) => state.changes,
+    responses: (state) => state.responses
   },
   actions: {
     connectToSockets(store) {
@@ -67,7 +39,7 @@ export default new Vuex.Store({
           "wss://echo.websocket.org"
         );
 
-        services[s].ws.onopen = function(event) {
+        services[s].ws.onopen = function(e) {
           console.log(`[open] Соединение ${services[s].url} установлено`);
           store.commit("setActive", s);
         };
@@ -86,20 +58,14 @@ export default new Vuex.Store({
             // обычно в этом случае event.code 1006
             console.log("[close] Соединение прервано, code = " + event.code);
           }
+          store.commit("setActive", s);
         };
 
         services[s].ws.onerror = function(error) {
           console.log(`[error] ${error.message}`);
         };
-        // setTimeout(function() {
-        //   if (services[s].ws.readyState === WebSocket.CLOSED) {
-        //     console.log(`${services[s].url} closed`);
-        //     services[s].active = false;
-        //   }
-        // }, 1000);
       }
-      console.log("sockets created");
-      store.commit("setServices", services);
+      store.commit("assignSockets", services);
     },
   },
   modules: {},

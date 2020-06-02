@@ -2,7 +2,7 @@
   <div id="app">
     <Sidebar />
     <div class="w3-main" style="margin-left:350px">
-      <router-view />
+      <router-view :service="selectedService" />
     </div>
   </div>
 </template>
@@ -11,15 +11,21 @@
 import Sidebar from "@/components/Sidebar";
 
 export default {
+  name: "app",
   data: () => ({}),
   components: {
     Sidebar,
   },
-  computed: {},
+  computed: {
+    selectedService() {
+      return this.$store.getters.allServices.find(
+        (s) => s.url === this.$route.params.id
+      );
+    },
+  },
   created() {
     this.$store.dispatch("connectToSockets");
-  },
-  mounted() {},
+  }
 };
 </script>
 <style></style>

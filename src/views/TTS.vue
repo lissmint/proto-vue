@@ -1,7 +1,13 @@
 <template>
   <div>
-    <NHeader title="Tacotron" />
-    <div class="w3-container model">
+    <NHeader :title="service.title" />
+    <div class="w3-container model" v-if="!service.active">
+      <h2>
+        {{ service.title }} is currently unavailable. Please check in later.
+      </h2>
+    </div>
+
+    <div class="w3-container model" v-else>
       <h2>Input sentence and Run</h2>
       <p>
         <textarea
@@ -54,11 +60,12 @@
 
 <script>
 export default {
-  name: 'tts-page',
-  computed:{
-    service(){
-      return this.$store.getters.allServices.find(s => s.url === this.$route.params.id)
-    }
-  }
-}
+  name: "tts-page",
+  props: ["service"],
+  // computed:{
+  //   service(){
+  //     return this.$store.getters.allServices.find(s => s.url === this.$route.params.id)
+  //   }
+  // }
+};
 </script>
