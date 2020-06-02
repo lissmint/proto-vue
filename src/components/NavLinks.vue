@@ -2,7 +2,7 @@
   <div :id="name" class="w3-hide w3-white w3-card-4">
       <router-link
         class="item w3-bar-item w3-button w3-border-bottom"
-        v-for="service in family"
+        v-for="service in services"
         :key="service.url"
         :to="'/' + service.familyName + '/' + service.url"
       >
@@ -22,7 +22,7 @@
 <script>
 export default {
   name: "nav-links",
-  props: ["name", "family"]
+  props: ["name", "services"]
 };
 </script>
 

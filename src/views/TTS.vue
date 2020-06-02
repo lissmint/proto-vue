@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NHeader :title="service.title" />
+    <AppHeader :title="service.title" />
     <div class="w3-container model" v-if="!service.active">
       <h2>
         {{ service.title }} is currently unavailable. Please check in later.

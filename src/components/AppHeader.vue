@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "nheader",
+  name: "app-header",
   props: ["title"],
   methods: {
     w3_open() {

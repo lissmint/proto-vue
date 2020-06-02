@@ -25,7 +25,7 @@ export default {
   },
   created() {
     this.$store.dispatch("connectToSockets");
-  }
+  },
 };
 </script>
 <style></style>

@@ -1,12 +1,12 @@
 export default [
   {
-    title: "Tacotron 2.1",
-    familyName: "tts",
-    active: false,
-    tags: ["EN", "LJ"],
-    url: "t2w",
-    ws: {},
-    options: {
+    title: "Tacotron 2.1",  // title used in sidebar
+    familyName: "tts",      // family of services name
+    active: false,          // websocket status
+    tags: ["EN", "LJ"],     // sidebar tags
+    url: "t2w",             // service url 
+    ws: {},                 // websocket object, assigned on startup
+    options: {              // necessary options for components on service page
       maxLength: 140,
     },
   },
