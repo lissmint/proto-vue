@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Loader from '@/components/Loader'
+import Loader from "@/components/Loader";
 import Sidebar from "@/components/Sidebar";
 
 export default {
@@ -23,9 +23,11 @@ export default {
   },
   computed: {
     selectedService() {
-      return this.$store.getters.allServices.find(
-        (s) => s.url === this.$route.params.id
-      );
+      if (this.$route.params)
+        return this.$store.getters.allServices.find(
+          (s) => s.url === this.$route.params.id
+        );
+      return null;
     },
     loaded() {
       return (
@@ -38,4 +40,5 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+</style>

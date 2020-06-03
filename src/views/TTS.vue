@@ -13,6 +13,7 @@
           style="resize: vertical; max-width: 900px;"
           :maxlength="service.options.maxLength || 2000"
           v-model="text"
+          :disabled="loading"
         ></textarea>
         <span
           class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
@@ -36,7 +37,7 @@
         ></i>
       </p>
 
-      <div class="w3-card-4" style="max-width: 900px;" v-if="result">
+      <div class="w3-card-4" style="max-width: 900px;">
         <header class="w3-container w3-light-gray">
           <h2>Result</h2>
         </header>
@@ -48,13 +49,20 @@
               id="tts-t2wlj-audio"
               controls
               src="/t2w/audio/default.wav"
+              v-if="result"
             ></audio>
           </p>
         </div>
 
-        <footer class="w3-container w3-light-gray">
-          <p class="w3-panel w3-leftbar w3-border-teal">
+        <footer class="w3-container w3-light-gray" v-if="!result">
+          <p class="w3-panel w3-leftbar w3-border-teal" v-if="!text.length">
             Enter text in the input field.
+          </p>
+          <p class="w3-panel w3-leftbar w3-border-teal" v-else-if="text.length">
+            Press "Run"
+          </p>
+          <p class="w3-panel w3-leftbar w3-border-teal" v-else-if="loading">
+            The result audio is loading
           </p>
         </footer>
       </div>
@@ -68,45 +76,47 @@ export default {
   props: ["service"],
   data: () => ({
     text: "",
-    sentText: "",
     result: false,
     error: false,
     loading: false,
-    data: "",
+    data: null,
   }),
   watch: {
     stateData() {
-      if (this.stateData != "") {
+      if (this.stateData != null) {
         this.loading = false;
         this.result = true;
         this.data = this.stateData;
-        this.$store.commit("setData", "");
+        let payload = {
+          url: this.service.url,
+          data: null,
+        };
+        this.$store.commit("setDataByUrl", payload);
       }
     },
   },
   computed: {
     stateData() {
-      return this.$store.getters.data;
+      return this.$store.getters.getDataByUrl(this.service.url);
     },
     fullName() {
-      let n = this.service.title;
-      this.service.tags.forEach((item) => (n += " " + item));
-      return n;
+      let name = this.service.title;
+      this.service.tags.forEach((item) => (name += " " + item));
+      return name;
     },
   },
   beforeRouteUpdate(to, from, next) {
     this.text = "";
-    this.sentText = "";
     this.result = false;
     this.error = false;
     this.loading = false;
+    this.data = "";
     next();
   },
   methods: {
     async sendData() {
       this.loading = true;
       this.result = false;
-      this.sentText = this.text;
       this.service.ws.send(this.text);
     },
     receiveMessage() {},

@@ -1,15 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import serviceList from "@/assets/serviceList"
-// import assignWebSocketListeners from "@/assets/assignListeners"
+import serviceList from "@/assets/serviceList";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     responses: 0,
-    data: '',
-    services: serviceList
+    services: serviceList,
   },
   mutations: {
     setActive(state, serviceIdx) {
@@ -18,10 +16,10 @@ export default new Vuex.Store({
       } else {
         state.services[serviceIdx].active = false;
       }
-      state.responses++
+      state.responses++;
     },
-    setData(state, data) {
-    state.data = data;
+    setDataByUrl(state, { url, data }) {
+      state.services.find((s) => s.url == url).data = data;
     },
     assignSockets(state, services) {
       state.services.forEach((val, idx, arr) => {
@@ -33,7 +31,8 @@ export default new Vuex.Store({
     activeServices: (state) => state.services.filter((serv) => serv.active),
     allServices: (state) => state.services,
     responses: (state) => state.responses,
-    data: (state) => state.data
+    getDataByUrl: (state) => (url) =>
+      state.services.find((s) => s.url == url).data,
   },
   actions: {
     connectToSockets(store) {
@@ -51,7 +50,11 @@ export default new Vuex.Store({
 
         services[s].ws.onmessage = function(event) {
           console.log(`[message] Данные получены с сервера: ${event.data}`);
-          store.commit('setData', event.data)
+          let payload = {
+            url: services[s].url,
+            data: event.data,
+          };
+          store.commit("setDataByUrl", payload);
         };
 
         services[s].ws.onclose = function(event) {
@@ -60,8 +63,6 @@ export default new Vuex.Store({
               `[close] Соединение ${services[s].url} закрыто чисто, код=${event.code} причина=${event.reason}`
             );
           } else {
-            // например, сервер убил процесс или сеть недоступна
-            // обычно в этом случае event.code 1006
             console.log("[close] Соединение прервано, code = " + event.code);
           }
           store.commit("setActive", s);

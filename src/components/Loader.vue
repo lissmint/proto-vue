@@ -1,8 +1,21 @@
 <template>
-  <div class="loader">Loading...</div>
+  <div class="container">
+    <div class="loader">Loading...</div>
+    <p>Checking which services are available at the moment. . .</p>
+  </div>
 </template>
 
 <style scoped>
+.container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .loader {
   color: #009688;
   font-size: 90px;
