@@ -91,90 +91,86 @@
 </template>
 
 <script>
-import NavLinks from "@/components/NavLinks";
-import NavCategory from "@/components/NavCategory";
+import NavLinks from '@/components/NavLinks'
+import NavCategory from '@/components/NavCategory'
 
 export default {
   components: {
     NavCategory,
-    NavLinks,
+    NavLinks
   },
   computed: {
     tts() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "tts"
-      );
+        serv => serv.familyName == 'tts'
+      )
     },
     asr() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "asr"
-      );
+        serv => serv.familyName == 'asr'
+      )
     },
     qa() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "qa"
-      );
+        serv => serv.familyName == 'qa'
+      )
     },
     nmt() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "nmt"
-      );
+        serv => serv.familyName == 'nmt'
+      )
     },
     mig() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "mig"
-      );
+        serv => serv.familyName == 'mig'
+      )
     },
     mlm() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "mlm"
-      );
+        serv => serv.familyName == 'mlm'
+      )
     },
     semsim() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "semsim"
-      );
+        serv => serv.familyName == 'semsim'
+      )
     },
     spp() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "spp"
-      );
+        serv => serv.familyName == 'spp'
+      )
     },
     tg() {
       return this.$store.getters.activeServices.filter(
-        (serv) => serv.familyName == "tg"
-      );
-    },
+        serv => serv.familyName == 'tg'
+      )
+    }
   },
   methods: {
     w3_close() {
-      document.getElementById("mySidebar").style.display = "none";
+      document.getElementById('mySidebar').style.display = 'none'
     },
     showModels(familyName) {
-      var x = document.getElementById(familyName);
-      if (!x) return;
+      var x = document.getElementById(familyName)
+      if (!x) return
 
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-light-gray";
+      if (x.className.indexOf('w3-show') == -1) {
+        x.className += ' w3-show'
+        x.previousElementSibling.className += ' w3-light-gray'
       } else {
-        x.className = x.className.replace(" w3-show", "");
+        x.className = x.className.replace(' w3-show', '')
         x.previousElementSibling.className = x.previousElementSibling.className.replace(
-          " w3-light-gray",
-          ""
-        );
+          ' w3-light-gray',
+          ''
+        )
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>
 a {
   text-decoration: none;
-}
-
-.w3-sidebar {
-  /* background-color: #333 !important; */
 }
 </style>

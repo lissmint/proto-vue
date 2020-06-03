@@ -11,34 +11,33 @@
 </template>
 
 <script>
-import Loader from "@/components/Loader";
-import Sidebar from "@/components/Sidebar";
+import Loader from '@/components/Loader'
+import Sidebar from '@/components/Sidebar'
 
 export default {
-  name: "app",
+  name: 'app',
   data: () => ({}),
   components: {
     Loader,
-    Sidebar,
+    Sidebar
   },
   computed: {
     selectedService() {
       if (this.$route.params)
         return this.$store.getters.allServices.find(
-          (s) => s.url === this.$route.params.id
-        );
-      return null;
+          s => s.url === this.$route.params.id
+        )
+      return null
     },
     loaded() {
       return (
         this.$store.getters.responses >= this.$store.getters.allServices.length
-      );
-    },
+      )
+    }
   },
   created() {
-    this.$store.dispatch("connectToSockets");
-  },
-};
+    this.$store.dispatch('connectToSockets')
+  }
+}
 </script>
-<style>
-</style>
+<style></style>

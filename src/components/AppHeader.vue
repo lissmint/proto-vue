@@ -14,12 +14,12 @@
 
 <script>
 export default {
-  name: "app-header",
-  props: ["title"],
+  name: 'app-header',
+  props: ['title'],
   methods: {
     w3_open() {
-      document.getElementById("mySidebar").style.display = "block";
-    },
-  },
-};
+      document.getElementById('mySidebar').style.display = 'block'
+    }
+  }
+}
 </script>

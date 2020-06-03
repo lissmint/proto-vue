@@ -6,7 +6,7 @@
 </template>
 
 <style scoped>
-.container{
+.container {
   position: fixed;
   top: 50%;
   left: 50%;

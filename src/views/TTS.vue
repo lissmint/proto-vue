@@ -57,95 +57,95 @@
 </template>
 
 <script>
-import TextInput from "@/components/TextInput.vue";
-import Error from "@/components/Error.vue";
+import TextInput from '@/components/TextInput.vue'
+import Error from '@/components/Error.vue'
 
 export default {
-  name: "tts-page",
+  name: 'tts-page',
   components: {
     TextInput,
-    Error,
+    Error
   },
-  props: ["service"],
+  props: ['service'],
   data: () => ({
-    text: "",
+    text: '',
     result: false,
     error: false,
     loading: false,
     data: null,
-    time: null,
+    time: null
   }),
   computed: {
     stateData() {
-      return this.$store.getters.getDataByUrl(this.service.url);
+      return this.$store.getters.getDataByUrl(this.service.url)
     },
     fullName() {
-      let name = this.service.title;
-      this.service.tags.forEach((tag) => (name += " " + tag));
-      return name;
-    },
+      let name = this.service.title
+      this.service.tags.forEach(tag => (name += ' ' + tag))
+      return name
+    }
   },
   watch: {
     stateData() {
       if (this.stateData) {
-        this.data = JSON.parse(this.stateData);
+        this.data = JSON.parse(this.stateData)
         switch (this.data.event) {
-          case "error":
-            this.showError();
-            break;
+          case 'error':
+            this.showError()
+            break
 
-          case "success":
-            this.result = true;
+          case 'success':
+            this.result = true
             console.log(
               `Success with time: ${(Date.now() - this.time) / 1000} s`
-            );
-            break;
+            )
+            break
 
-          case "default":
-            console.log("default");
-            break;
+          case 'default':
+            console.log('default')
+            break
         }
-        this.loading = false;
+        this.loading = false
 
         let payload = {
           url: this.service.url,
-          data: null,
-        };
-        this.$store.commit("setDataByUrl", payload);
+          data: null
+        }
+        this.$store.commit('setDataByUrl', payload)
       }
-    },
+    }
   },
   methods: {
     sendData() {
-      this.time = Date.now();
-      this.loading = true;
-      this.result = false;
-      this.error = false;
+      this.time = Date.now()
+      this.loading = true
+      this.result = false
+      this.error = false
       this.service.ws.send(
         JSON.stringify({
           event: this.service.url,
-          text: this.text,
+          text: this.text
         })
-      );
+      )
     },
     showError() {
-      this.error = true;
+      this.error = true
       setTimeout(function() {
-        this.error = false;
-      }, 3000);
+        this.error = false
+      }, 3000)
     },
     setText(text) {
-      this.text = text;
-    },
+      this.text = text
+    }
   },
   beforeRouteUpdate(to, from, next) {
-    this.text = "";
-    this.result = false;
-    this.error = false;
-    this.loading = false;
-    this.data = "";
-    this.time = null;
-    next();
-  },
-};
+    this.text = ''
+    this.result = false
+    this.error = false
+    this.loading = false
+    this.data = ''
+    this.time = null
+    next()
+  }
+}
 </script>

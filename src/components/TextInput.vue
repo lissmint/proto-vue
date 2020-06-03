@@ -11,20 +11,20 @@
     ></textarea>
     <span
       class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
-      > {{value.length}} / {{ maxlength }}</span
+    >
+      {{ value.length }} / {{ maxlength }}</span
     >
   </p>
 </template>
 
 <script>
 export default {
-  name: "text-input",
-  props: ["placeholder", "maxlength", "disabled", "value"],
-  data: () => ({
-  }),
-  beforeRouteUpdate (to, from, next) {
-    this.text = "";
+  name: 'text-input',
+  props: ['placeholder', 'maxlength', 'disabled', 'value'],
+  data: () => ({}),
+  beforeRouteUpdate(to, from, next) {
+    this.text = ''
     next()
-  },
-};
+  }
+}
 </script>

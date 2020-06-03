@@ -12,7 +12,7 @@
           class="w3-tag w3-small"
           :class="{
             'w3-teal': servicetag.trim().toLowerCase() != 'in work',
-            'w3-yellow': servicetag.trim().toLowerCase() == 'in work',
+            'w3-yellow': servicetag.trim().toLowerCase() == 'in work'
           }"
           v-for="(servicetag, i) in service.tags"
           :key="i"
@@ -25,9 +25,9 @@
 
 <script>
 export default {
-  name: "nav-links",
-  props: ["name", "services"],
-};
+  name: 'nav-links',
+  props: ['name', 'services']
+}
 </script>
 
 <style scoped>

@@ -10,14 +10,14 @@
 
 <script>
 export default {
-  name: "nav-category",
-  props: ["title", "available", "familyName"],
+  name: 'nav-category',
+  props: ['title', 'available', 'familyName'],
   methods: {
     showModels(familyName) {
-      this.$emit("showModels", familyName);
-    },
-  },
-};
+      this.$emit('showModels', familyName)
+    }
+  }
+}
 </script>
 
 <style scoped>
