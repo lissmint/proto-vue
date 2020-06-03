@@ -6,20 +6,12 @@
     </div>
     <div class="w3-container model" v-else>
       <h2>Input sentence and Run</h2>
-      <p>
-        <textarea
-          placeholder="Enter text in the input field."
-          class="w3-input w3-border"
-          style="resize: vertical; max-width: 900px;"
-          :maxlength="service.options.maxLength || 2000"
-          v-model="text"
-          :disabled="loading"
-        ></textarea>
-        <span
-          class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
-          >{{ text.length }} / {{ service.options.maxLength || 2000 }}</span
-        >
-      </p>
+      <TextInput
+        placeholder="Enter text in the input field"
+        :maxLength="service.options.maxLength"
+        :disabled="loading"
+        @setText="setText"
+      />
 
       <p>
         <button
@@ -46,9 +38,8 @@
           <p>
             <audio
               style="max-width:95%;"
-              id="tts-t2wlj-audio"
               controls
-              src="/t2w/audio/default.wav"
+              :src="`${data.audio_dir}${data.audio_name}.wav`"
               v-if="result"
             ></audio>
           </p>
@@ -56,7 +47,7 @@
 
         <footer class="w3-container w3-light-gray" v-if="!result">
           <p class="w3-panel w3-leftbar w3-border-teal" v-if="!text.length">
-            Enter text in the input field.
+            Enter text in the input field
           </p>
           <p class="w3-panel w3-leftbar w3-border-teal" v-else-if="text.length">
             Press "Run"
@@ -66,13 +57,33 @@
           </p>
         </footer>
       </div>
+
+      <div class="w3-container" v-if="error">
+        <div
+          class="w3-panel w3-red w3-display-container"
+          style="resize:none;   max-width: 900px;"
+        >
+          <span
+            onclick="this.parentElement.style.display='none'"
+            class="w3-button w3-red w3-large w3-display-topright"
+            >&times;</span
+          >
+          <h3>Error!</h3>
+          <p>{{ data.msg }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import TextInput from "@/components/TextInput.vue";
+
 export default {
   name: "tts-page",
+  components: {
+    TextInput,
+  },
   props: ["service"],
   data: () => ({
     text: "",
@@ -80,6 +91,7 @@ export default {
     error: false,
     loading: false,
     data: null,
+    time: null,
   }),
   computed: {
     stateData() {
@@ -93,10 +105,27 @@ export default {
   },
   watch: {
     stateData() {
-      if (this.stateData != null) {
+      if (this.stateData) {
+        this.data = JSON.parse(this.stateData);
+        switch (this.data.event) {
+          case "error":
+            this.error = true;
+            console.log(this.data.msg);
+            break;
+
+          case "success":
+            console.log(
+              `Success with time: ${(Date.now() - this.time) / 1000} s`
+            );
+            break;
+
+          case "default":
+            console.log("default");
+            break;
+        }
         this.loading = false;
         this.result = true;
-        this.data = this.stateData;
+
         let payload = {
           url: this.service.url,
           data: null,
@@ -106,12 +135,20 @@ export default {
     },
   },
   methods: {
-    async sendData() {
+    sendData() {
+      this.time = Date.now();
       this.loading = true;
       this.result = false;
-      this.service.ws.send(this.text);
+      this.service.ws.send(
+        JSON.stringify({
+          event: this.service.url,
+          text: this.text,
+        })
+      );
     },
-    receiveMessage() {},
+    setText(text) {
+      this.text = text;
+    },
   },
   beforeRouteUpdate(to, from, next) {
     this.text = "";
@@ -119,6 +156,7 @@ export default {
     this.error = false;
     this.loading = false;
     this.data = "";
+    this.time = null;
     next();
   },
 };

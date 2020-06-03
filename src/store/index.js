@@ -13,10 +13,11 @@ export default new Vuex.Store({
     setActive(state, url) {
       if (state.services.find((s) => s.url == url).ws.readyState == 1) {
         state.services.find((s) => s.url == url).active = true;
+        state.responses++;
       } else {
         state.services.find((s) => s.url == url).active = false;
       }
-      state.responses++;
+      
     },
     setDataByUrl(state, { url, data }) {
       state.services.find((s) => s.url == url).data = data;
