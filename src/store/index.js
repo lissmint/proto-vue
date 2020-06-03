@@ -74,7 +74,7 @@ export default new Vuex.Store({
           } else {
             console.log("[close] Соединение прервано, code = " + event.code);
           }
-          store.commit("setActive", s);
+          store.commit("setActive", services[s].url);
         };
 
         services[s].ws.onerror = function(error) {
