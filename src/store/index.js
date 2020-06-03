@@ -10,11 +10,11 @@ export default new Vuex.Store({
     services: serviceList,
   },
   mutations: {
-    setActive(state, serviceIdx) {
-      if (this.state.services[serviceIdx].ws.readyState == 1) {
-        state.services[serviceIdx].active = true;
+    setActive(state, url) {
+      if (state.services.find((s) => s.url == url).ws.readyState == 1) {
+        state.services.find((s) => s.url == url).active = true;
       } else {
-        state.services[serviceIdx].active = false;
+        state.services.find((s) => s.url == url).active = false;
       }
       state.responses++;
     },
@@ -24,6 +24,15 @@ export default new Vuex.Store({
     assignSockets(state, services) {
       state.services.forEach((val, idx, arr) => {
         arr[idx].ws = services[idx].ws;
+      });
+      state.services.sort(function(a, b) {
+        if (a.title > b.title) {
+          return 1;
+        }
+        if (a.title < b.title) {
+          return -1;
+        }
+        return 0;
       });
     },
   },
@@ -45,7 +54,7 @@ export default new Vuex.Store({
 
         services[s].ws.onopen = function(e) {
           console.log(`[open] Соединение ${services[s].url} установлено`);
-          store.commit("setActive", s);
+          store.commit("setActive", services[s].url);
         };
 
         services[s].ws.onmessage = function(event) {
@@ -72,6 +81,7 @@ export default new Vuex.Store({
           console.log(`[error] ${error.message}`);
         };
       }
+
       store.commit("assignSockets", services);
     },
   },

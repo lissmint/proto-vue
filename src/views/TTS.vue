@@ -81,6 +81,16 @@ export default {
     loading: false,
     data: null,
   }),
+  computed: {
+    stateData() {
+      return this.$store.getters.getDataByUrl(this.service.url);
+    },
+    fullName() {
+      let name = this.service.title;
+      this.service.tags.forEach((item) => (name += " " + item));
+      return name;
+    },
+  },
   watch: {
     stateData() {
       if (this.stateData != null) {
@@ -95,15 +105,13 @@ export default {
       }
     },
   },
-  computed: {
-    stateData() {
-      return this.$store.getters.getDataByUrl(this.service.url);
+  methods: {
+    async sendData() {
+      this.loading = true;
+      this.result = false;
+      this.service.ws.send(this.text);
     },
-    fullName() {
-      let name = this.service.title;
-      this.service.tags.forEach((item) => (name += " " + item));
-      return name;
-    },
+    receiveMessage() {},
   },
   beforeRouteUpdate(to, from, next) {
     this.text = "";
@@ -112,14 +120,6 @@ export default {
     this.loading = false;
     this.data = "";
     next();
-  },
-  methods: {
-    async sendData() {
-      this.loading = true;
-      this.result = false;
-      this.service.ws.send(this.text);
-    },
-    receiveMessage() {},
   },
 };
 </script>
