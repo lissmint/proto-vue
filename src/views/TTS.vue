@@ -58,31 +58,20 @@
         </footer>
       </div>
 
-      <div class="w3-container" v-if="error">
-        <div
-          class="w3-panel w3-red w3-display-container"
-          style="resize:none;   max-width: 900px;"
-        >
-          <span
-            onclick="this.parentElement.style.display='none'"
-            class="w3-button w3-red w3-large w3-display-topright"
-            >&times;</span
-          >
-          <h3>Error!</h3>
-          <p>{{ data.msg }}</p>
-        </div>
-      </div>
+      <Error :msg="data.msg" v-if="error" />
     </div>
   </div>
 </template>
 
 <script>
 import TextInput from "@/components/TextInput.vue";
+import Error from "@/components/Error.vue";
 
 export default {
   name: "tts-page",
   components: {
     TextInput,
+    Error,
   },
   props: ["service"],
   data: () => ({
@@ -139,6 +128,7 @@ export default {
       this.time = Date.now();
       this.loading = true;
       this.result = false;
+      this.error = false;
       this.service.ws.send(
         JSON.stringify({
           event: this.service.url,
