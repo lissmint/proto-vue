@@ -10,7 +10,7 @@
         >&times;</span
       >
       <h3>Error!</h3>
-      <p>{{ msg || 'error' }}</p>
+      <p>{{ msg }}</p>
     </div>
   </div>
 </template>

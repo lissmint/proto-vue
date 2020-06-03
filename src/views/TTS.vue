@@ -29,7 +29,7 @@
         ></i>
       </p>
 
-      <div class="w3-card-4" style="max-width: 900px;">
+      <div class="w3-card-4" style="max-width: 900px;" v-if="result">
         <header class="w3-container w3-light-gray">
           <h2>Result</h2>
         </header>
@@ -40,20 +40,13 @@
               style="max-width:95%;"
               controls
               :src="`${data.audio_dir}${data.audio_name}.wav`"
-              v-if="result"
             ></audio>
           </p>
         </div>
 
-        <footer class="w3-container w3-light-gray" v-if="!result">
-          <p class="w3-panel w3-leftbar w3-border-teal" v-if="!text.length">
-            Enter text in the input field
-          </p>
-          <p class="w3-panel w3-leftbar w3-border-teal" v-else-if="text.length">
-            Press "Run"
-          </p>
-          <p class="w3-panel w3-leftbar w3-border-teal" v-else-if="loading">
-            The result audio is loading
+        <footer class="w3-container w3-light-gray">
+          <p class="w3-panel w3-leftbar w3-border-teal">
+            Enter a new message and press "Run" to try again
           </p>
         </footer>
       </div>
@@ -88,7 +81,7 @@ export default {
     },
     fullName() {
       let name = this.service.title;
-      this.service.tags.forEach((item) => (name += " " + item));
+      this.service.tags.forEach((tag) => (name += " " + tag));
       return name;
     },
   },
@@ -98,11 +91,12 @@ export default {
         this.data = JSON.parse(this.stateData);
         switch (this.data.event) {
           case "error":
-            this.error = true;
-            console.log(this.data.msg);
+            this.showError();
             break;
 
           case "success":
+            // this.result = true;
+            // this.loading = false;
             console.log(
               `Success with time: ${(Date.now() - this.time) / 1000} s`
             );
@@ -135,6 +129,12 @@ export default {
           text: this.text,
         })
       );
+    },
+    showError() {
+      this.error = true;
+      setTimeout(function() {
+        this.error = false;
+      }, 3000);
     },
     setText(text) {
       this.text = text;
