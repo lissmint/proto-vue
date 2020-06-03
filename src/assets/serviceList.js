@@ -9,15 +9,17 @@ export default [
     options: {              // necessary options for components on service page
       maxLength: 140,
     },
+    data: ''
   },
   {
-    title: "Tacotron 2.1 + WJ",
+    title: "Tacotron 2.1 + WG",
     familyName: "tts",
     active: false,
     tags: ["EN", "LJ", "BIG"],
     url: "t2wlj",
     ws: {},
     options: {},
+    data: ''
   },
   {
     title: "Wave2Letter+",
@@ -27,5 +29,6 @@ export default [
     url: "w2l",
     ws: {},
     options: {},
+    data: ''
   },
 ];

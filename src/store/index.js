@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     responses: 0,
+    data: '',
     services: serviceList
   },
   mutations: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
       }
       state.responses++
     },
+    setData(state, data) {
+    state.data = data;
+    },
     assignSockets(state, services) {
       state.services.forEach((val, idx, arr) => {
         arr[idx].ws = services[idx].ws;
@@ -28,7 +32,8 @@ export default new Vuex.Store({
   getters: {
     activeServices: (state) => state.services.filter((serv) => serv.active),
     allServices: (state) => state.services,
-    responses: (state) => state.responses
+    responses: (state) => state.responses,
+    data: (state) => state.data
   },
   actions: {
     connectToSockets(store) {
@@ -46,6 +51,7 @@ export default new Vuex.Store({
 
         services[s].ws.onmessage = function(event) {
           console.log(`[message] Данные получены с сервера: ${event.data}`);
+          store.commit('setData', event.data)
         };
 
         services[s].ws.onclose = function(event) {

@@ -4,7 +4,7 @@
 
 <style scoped>
 .loader {
-  color: #616161;
+  color: #009688;
   font-size: 90px;
   text-indent: -9999em;
   overflow: hidden;
