@@ -10,14 +10,12 @@ export default new Vuex.Store({
     services: serviceList,
   },
   mutations: {
-    setActive(state, url) {
-      if (state.services.find((s) => s.url == url).ws.readyState == 1) {
+    setActive(state, {url, readyState}) {
+      if (readyState == 1) {
         state.services.find((s) => s.url == url).active = true;
-        state.responses++;
       } else {
         state.services.find((s) => s.url == url).active = false;
       }
-      
     },
     setDataByUrl(state, { url, data }) {
       state.services.find((s) => s.url == url).data = data;
@@ -36,6 +34,9 @@ export default new Vuex.Store({
         return 0;
       });
     },
+    incResponses(state){
+      state.responses++
+    }
   },
   getters: {
     activeServices: (state) => state.services.filter((serv) => serv.active),
@@ -49,13 +50,18 @@ export default new Vuex.Store({
       let services = store.getters.allServices.map((a) => ({ ...a }));
       for (let s in services) {
         services[s].ws = new WebSocket(
-          // `ws://localhost:80/services/${services[s].url}/`
-          "wss://echo.websocket.org"
+          `ws://localhost:80/services/${services[s].url}/`
+          // "wss://echo.websocket.org"
         );
 
         services[s].ws.onopen = function(e) {
           console.log(`[open] Соединение ${services[s].url} установлено`);
-          store.commit("setActive", services[s].url);
+          let payload = {
+            url: services[s].url,
+            readyState: services[s].ws.readyState
+          }
+          store.commit("setActive", payload);
+          store.commit("incResponses");
         };
 
         services[s].ws.onmessage = function(event) {
@@ -74,12 +80,18 @@ export default new Vuex.Store({
             );
           } else {
             console.log("[close] Соединение прервано, code = " + event.code);
+            
           }
-          store.commit("setActive", services[s].url);
+          let payload = {
+            url: services[s].url,
+            readyState: services[s].ws.readyState
+          }
+          store.commit("setActive", payload);
         };
 
         services[s].ws.onerror = function(error) {
           console.log(`[error] ${error.message}`);
+          store.commit("incResponses")
         };
       }
 

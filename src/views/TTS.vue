@@ -95,8 +95,7 @@ export default {
             break;
 
           case "success":
-            // this.result = true;
-            // this.loading = false;
+            this.result = true;
             console.log(
               `Success with time: ${(Date.now() - this.time) / 1000} s`
             );
@@ -107,7 +106,6 @@ export default {
             break;
         }
         this.loading = false;
-        this.result = true;
 
         let payload = {
           url: this.service.url,
