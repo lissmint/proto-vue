@@ -8,9 +8,9 @@
       <h2>Input sentence and Run</h2>
       <TextInput
         placeholder="Enter text in the input field"
-        :maxLength="service.options.maxLength"
+        :maxlength="service.options.maxLength"
         :disabled="loading"
-        @setText="setText"
+        v-model="text"
       />
 
       <p>

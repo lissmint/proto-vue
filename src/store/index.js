@@ -50,8 +50,8 @@ export default new Vuex.Store({
       let services = store.getters.allServices.map((a) => ({ ...a }));
       for (let s in services) {
         services[s].ws = new WebSocket(
-          `ws://localhost:80/services/${services[s].url}/`
-          // "wss://echo.websocket.org"
+          // `ws://localhost:80/services/${services[s].url}/`
+          "wss://echo.websocket.org"
         );
 
         services[s].ws.onopen = function(e) {
