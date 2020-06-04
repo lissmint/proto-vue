@@ -17,6 +17,9 @@ export default new Vuex.Store({
         state.services.find(s => s.url == url).active = false
       }
     },
+    setServices(state, services) {
+      state.services = services
+    },
     setDataByUrl(state, { url, data }) {
       state.services.find(s => s.url == url).data = data
     },
@@ -24,15 +27,7 @@ export default new Vuex.Store({
       state.services.forEach((val, idx, arr) => {
         arr[idx].ws = services[idx].ws
       })
-      state.services.sort(function(a, b) {
-        if (a.title > b.title) {
-          return 1
-        }
-        if (a.title < b.title) {
-          return -1
-        }
-        return 0
-      })
+      console.log(state.services)
     },
     incResponses(state) {
       state.responses++
@@ -45,56 +40,71 @@ export default new Vuex.Store({
     getDataByUrl: state => url => state.services.find(s => s.url == url).data
   },
   actions: {
-    connectToSockets(store) {
-      let services = store.getters.allServices.map(a => ({ ...a }))
+    sortServices({ commit, state }) {
+      commit(
+        'setServices',
+        state.services.sort(function(a, b) {
+          if (a.title > b.title) {
+            return 1
+          }
+          if (a.title < b.title) {
+            return -1
+          }
+          return 0
+        })
+      )
+    },
+    connectToSockets({ commit, dispatch, state }) {
+      dispatch('sortServices')
+      let services = state.services.map(a => ({ ...a }))
       for (let s in services) {
         services[s].ws = new WebSocket(
           // `ws://localhost:80/services/${services[s].url}/`
           'wss://echo.websocket.org'
         )
-
-        services[s].ws.onopen = function(e) {
-          console.log(`[open] Соединение ${services[s].url} установлено`)
-          let payload = {
-            url: services[s].url,
-            readyState: services[s].ws.readyState
-          }
-          store.commit('setActive', payload)
-          store.commit('incResponses')
-        }
-
-        services[s].ws.onmessage = function(event) {
-          console.log(`[message] Данные получены с сервера: ${event.data}`)
-          let payload = {
-            url: services[s].url,
-            data: event.data
-          }
-          store.commit('setDataByUrl', payload)
-        }
-
-        services[s].ws.onclose = function(event) {
-          if (event.wasClean) {
-            console.log(
-              `[close] Соединение ${services[s].url} закрыто чисто, код=${event.code} причина=${event.reason}`
-            )
-          } else {
-            console.log('[close] Соединение прервано, code = ' + event.code)
-          }
-          let payload = {
-            url: services[s].url,
-            readyState: services[s].ws.readyState
-          }
-          store.commit('setActive', payload)
-        }
-
-        services[s].ws.onerror = function(error) {
-          console.log(`[error] ${error.message}`)
-          store.commit('incResponses')
-        }
+        dispatch('subscribeSocket', {
+          socket: services[s].ws,
+          url: services[s].url
+        })
+      }
+      commit('assignSockets', services)
+    },
+    subscribeSocket({ commit }, { socket, url }) {
+      socket.onopen = function(e) {
+        console.log(`[open] Соединение ${url} установлено`)
+        commit('setActive', {
+          url,
+          readyState: socket.readyState
+        })
+        commit('incResponses')
       }
 
-      store.commit('assignSockets', services)
+      socket.onmessage = function(event) {
+        console.log(`[message] Данные получены с сервера: ${event.data}`)
+        commit('setDataByUrl', {
+          url,
+          data: event.data
+        })
+      }
+
+      socket.onclose = function(event) {
+        if (event.wasClean) {
+          console.log(
+            `[close] Соединение ${url} закрыто чисто, код=${event.code} причина=${event.reason}`
+          )
+        } else {
+          console.log('[close] Соединение прервано, code = ' + event.code)
+        }
+        commit('setActive', {
+          url,
+          readyState: socket.readyState
+        })
+      }
+
+      socket.onerror = function(error) {
+        console.log(`[error] ${error.message}`)
+        commit('incResponses')
+      }
     }
-  },
-  modules: {}
+  }
 })

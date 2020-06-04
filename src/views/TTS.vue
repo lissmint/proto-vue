@@ -9,7 +9,7 @@
       <TextInput
         placeholder="Enter text in the input field"
         :maxlength="service.options.maxLength"
-        :disabled="loading"
+        :disabled="isRunning"
         v-model="text"
       />
 
@@ -17,13 +17,12 @@
         <button
           class="w3-button w3-teal"
           @click="sendData()"
-          ref="btn"
-          :disabled="!text.length || loading"
+          :disabled="!text.length || isRunning"
         >
           Run
         </button>
         <i
-          v-if="loading"
+          v-if="isRunning"
           class="fa fa-spinner w3-spin w3-center"
           style="font-size:20px;"
         ></i>
@@ -39,7 +38,7 @@
             <audio
               style="max-width:95%;"
               controls
-              :src="`${data.audio_dir}${data.audio_name}.wav`"
+              :src="`${receivedData.audio_dir}${receivedData.audio_name}.wav`"
             ></audio>
           </p>
         </div>
@@ -51,7 +50,7 @@
         </footer>
       </div>
 
-      <Error :msg="data.msg" v-if="error" />
+      <Error :msg="receivedData.msg" v-if="error" />
     </div>
   </div>
 </template>
@@ -59,91 +58,33 @@
 <script>
 import TextInput from '@/components/TextInput.vue'
 import Error from '@/components/Error.vue'
+import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
+  mixins: [servicePage],
   name: 'tts-page',
   components: {
     TextInput,
     Error
   },
-  props: ['service'],
   data: () => ({
     text: '',
-    result: false,
-    error: false,
-    loading: false,
-    data: null,
-    time: null
+    userData: null
   }),
-  computed: {
-    stateData() {
-      return this.$store.getters.getDataByUrl(this.service.url)
-    },
-    fullName() {
-      let name = this.service.title
-      this.service.tags.forEach(tag => (name += ' ' + tag))
-      return name
-    }
-  },
   watch: {
-    stateData() {
-      if (this.stateData) {
-        this.data = JSON.parse(this.stateData)
-        switch (this.data.event) {
-          case 'error':
-            this.showError()
-            break
-
-          case 'success':
-            this.result = true
-            console.log(
-              `Success with time: ${(Date.now() - this.time) / 1000} s`
-            )
-            break
-
-          case 'default':
-            console.log('default')
-            break
-        }
-        this.loading = false
-
-        let payload = {
-          url: this.service.url,
-          data: null
-        }
-        this.$store.commit('setDataByUrl', payload)
-      }
-    }
-  },
-  methods: {
-    sendData() {
-      this.time = Date.now()
-      this.loading = true
-      this.result = false
-      this.error = false
-      this.service.ws.send(
-        JSON.stringify({
-          event: this.service.url,
-          text: this.text
-        })
-      )
-    },
-    showError() {
-      this.error = true
-      setTimeout(function() {
-        this.error = false
-      }, 3000)
-    },
-    setText(text) {
-      this.text = text
+    text() {
+      this.userData = { event: this.service.url, text: this.text }
     }
   },
   beforeRouteUpdate(to, from, next) {
+    //reset component data fields
     this.text = ''
+    this.userData = null
+    //reset mixin data fields
     this.result = false
     this.error = false
-    this.loading = false
-    this.data = ''
+    this.isRunning = false
+    this.receivedData = null
     this.time = null
     next()
   }

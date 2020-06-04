@@ -7,10 +7,10 @@ export default [
     url: 't2w', // service url
     ws: null, // websocket object, assigned on created
     options: {
-      // options necessary for components at service page
+      // options necessary for components on service page
       maxLength: 140 // textfield maxlength
     },
-    data: null // data received from websocket, assigned by websocket onmessage event, then passed to component and reset by component
+    data: null // assigned by websocket onmessage event, then passed to component and reset by component
   },
   {
     title: 'Tacotron 2.1 + WG',
@@ -24,16 +24,6 @@ export default [
     },
     data: null
   },
-  // {
-  //   title: "",
-  //   familyName: "tts",
-  //   active: false,
-  //   tags: ["EN", "LJ", "BIG"],
-  //   url: "tacotron1",
-  //   ws: null,
-  //   options: {},
-  //   data: null
-  // },
   {
     title: 'Tacotron 1.6 Long-Seq',
     familyName: 'tts',
@@ -141,3 +131,14 @@ export default [
     data: null
   }
 ]
+
+// {
+//   title: "",
+//   familyName: "tts",
+//   active: false,
+//   tags: ["EN", "LJ", "BIG"],
+//   url: "tacotron1",
+//   ws: null,
+//   options: {},
+//   data: null
+// },
