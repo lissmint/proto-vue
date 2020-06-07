@@ -3,7 +3,7 @@
     <div v-if="loaded">
       <Sidebar />
       <div class="w3-main" style="margin-left:350px">
-        <router-view :service="selectedService" />
+        <router-view />
       </div>
     </div>
     <Loader v-else />
@@ -22,13 +22,6 @@ export default {
     Sidebar
   },
   computed: {
-    selectedService() {
-      if (this.$route.params)
-        return this.$store.getters.allServices.find(
-          s => s.url === this.$route.params.id
-        )
-      return null
-    },
     loaded() {
       return (
         this.$store.getters.responses >= this.$store.getters.allServices.length

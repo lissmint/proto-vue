@@ -9,8 +9,7 @@ export default [
     options: {
       // options necessary for components on service page
       maxLength: 140 // textfield maxlength
-    },
-    data: null // assigned by websocket onmessage event, then passed to component and reset by component
+    }
   },
   {
     title: 'Tacotron 2.1 + WG',
@@ -21,8 +20,7 @@ export default [
     ws: null,
     options: {
       maxLength: 140
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 1.6 Long-Seq',
@@ -33,8 +31,7 @@ export default [
     ws: null,
     options: {
       maxLength: 200
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 1.6 + WG',
@@ -45,8 +42,7 @@ export default [
     ws: null,
     options: {
       maxLength: 200
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 1.6 Long-Seq',
@@ -57,8 +53,7 @@ export default [
     ws: null,
     options: {
       maxLength: 140
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 1.5',
@@ -69,8 +64,7 @@ export default [
     ws: null,
     options: {
       maxLength: 70
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 2.0 Naive',
@@ -81,8 +75,7 @@ export default [
     ws: null,
     options: {
       maxLength: 140
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 2.1 + WG',
@@ -93,8 +86,7 @@ export default [
     ws: null,
     options: {
       maxLength: 140
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 2.1',
@@ -105,8 +97,7 @@ export default [
     ws: null,
     options: {
       maxLength: 140
-    },
-    data: null
+    }
   },
   {
     title: 'Tacotron 2.1',
@@ -117,8 +108,7 @@ export default [
     ws: null,
     options: {
       maxLength: 140
-    },
-    data: null
+    }
   },
   {
     title: 'Wave2Letter+',
@@ -127,8 +117,7 @@ export default [
     tags: ['EN', 'LibriSpeech'],
     url: 'w2l',
     ws: null,
-    options: {},
-    data: null
+    options: {}
   }
 ]
 

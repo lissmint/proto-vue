@@ -80,12 +80,6 @@ export default {
     //reset component data fields
     this.text = ''
     this.userData = null
-    //reset mixin data fields
-    this.result = false
-    this.error = false
-    this.isRunning = false
-    this.receivedData = null
-    this.time = null
     next()
   }
 }

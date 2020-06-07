@@ -6,59 +6,104 @@
         {{ service.title }} is currently unavailable. Please check in later.
       </h2>
     </div>
-    <div class="w3-container model">
+    <div class="w3-container model" v-else>
       <h2>Choose wav audio and Run.</h2>
 
       <p>
         <input
           type="file"
+          accept="audio/wav"
           value="Upload"
+          @change="onFileChange"
           class="w3-input w3-teal"
           :disabled="isRunning"
+          ref="fileInput"
         />
       </p>
 
       <p>
         <button
-          id="asr-w2l-btn"
           class="w3-button w3-teal"
-          :disabled="isRunning"
+          @click="sendData"
+          :disabled="isRunning || !rawData"
         >
           Run
         </button>
         <i
           class="fa fa-spinner w3-spin w3-center"
-          style="font-size:20px; display: none;"
+          style="font-size:20px;"
+          v-if="isRunning"
         ></i>
       </p>
 
-      <div class="w3-card-4" style="max-width: 900px;">
+      <div class="w3-card-4" style="max-width: 900px;" v-if="result">
         <header class="w3-container w3-light-gray">
           <h2>Result</h2>
         </header>
 
         <div class="w3-container">
-          <p id="asr-w2l-answer">Answer.</p>
+          <p id="asr-w2l-answer">{{ receivedData.text }}</p>
         </div>
 
         <footer class="w3-container w3-light-gray">
-          <p
-            id="asr-w2l-card-audioname"
-            class="w3-panel w3-leftbar w3-border-teal"
-          >
-            Audio name.
+          <p class="w3-panel w3-leftbar w3-border-teal">
+            {{ fileName }}
           </p>
         </footer>
       </div>
+
+      <Error :msg="receivedData.msg" v-if="error" />
     </div>
   </div>
 </template>
 
 <script>
-import ServicePage from '@/mixins/servicePage.mixin'
+import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
   name: 'asr-page',
-  mixins: [ServicePage]
+  mixins: [servicePage],
+  data: () => ({
+    rawData: null,
+    fileName: ''
+  }),
+  methods: {
+    onFileChange(e) {
+      var file = e.target.files || e.dataTransfer.files
+      if (!file.length) return
+      this.createFile(file[0])
+    },
+    createFile(file) {
+      var reader = new FileReader()
+      this.rawData = new ArrayBuffer()
+      this.getFileName(this.$refs.fileInput.value)
+
+      var vm = this
+      reader.onload = e => {
+        vm.rawData = e.target.result
+      }
+
+      reader.readAsArrayBuffer(file)
+    },
+    getFileName(path) {
+      let name = path.split('\\')
+      this.fileName = name[name.length - 1]
+    },
+    sendData() {
+      this.service.ws.binaryType = 'arraybuffer'
+      this.time = Date.now()
+      this.isRunning = true
+      this.result = false
+      this.error = false
+      this.onMessage()
+      this.service.ws.send(this.rawData)
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    //reset component data fields
+    this.rawData = null
+    this.fileName = ''
+    next()
+  }
 }
 </script>

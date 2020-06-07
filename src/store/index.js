@@ -20,9 +20,6 @@ export default new Vuex.Store({
     setServices(state, services) {
       state.services = services
     },
-    setDataByUrl(state, { url, data }) {
-      state.services.find(s => s.url == url).data = data
-    },
     assignSockets(state, services) {
       state.services.forEach((val, idx, arr) => {
         arr[idx].ws = services[idx].ws
@@ -36,8 +33,7 @@ export default new Vuex.Store({
   getters: {
     activeServices: state => state.services.filter(serv => serv.active),
     allServices: state => state.services,
-    responses: state => state.responses,
-    getDataByUrl: state => url => state.services.find(s => s.url == url).data
+    responses: state => state.responses
   },
   actions: {
     sortServices({ commit, state }) {
@@ -77,14 +73,6 @@ export default new Vuex.Store({
           readyState: socket.readyState
         })
         commit('incResponses')
-      }
-
-      socket.onmessage = function(event) {
-        console.log(`[message] Данные получены с сервера: ${event.data}`)
-        commit('setDataByUrl', {
-          url,
-          data: event.data
-        })
       }
 
       socket.onclose = function(event) {
