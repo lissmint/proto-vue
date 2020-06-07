@@ -14,9 +14,6 @@ export default {
         )
       return null
     },
-    stateData() {
-      return this.$store.getters.getDataByUrl(this.service.url)
-    },
     fullName() {
       let name = this.service.title
       this.service.tags.forEach(tag => (name += ' ' + tag))
