@@ -45,7 +45,7 @@
 
         <footer class="w3-container w3-light-gray">
           <p class="w3-panel w3-leftbar w3-border-teal">
-            Enter a new message and press "Run" to try again
+            Enter a new text and press "Run" to try again
           </p>
         </footer>
       </div>
@@ -57,7 +57,6 @@
 
 <script>
 import TextInput from '@/components/TextInput.vue'
-import Error from '@/components/Error.vue'
 import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
