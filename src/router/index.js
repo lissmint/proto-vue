@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +24,7 @@ const routes = [
     name: 'QA',
     component: () => import('../views/QA.vue')
   },
+  // зарегистрировать новый роут ПЕРЕД 404
   {
     path: '*',
     component: () => import('../views/404.vue')

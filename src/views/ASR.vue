@@ -51,9 +51,8 @@
           </p>
         </footer>
       </div>
-
-      <Error :msg="receivedData.msg" v-if="error" />
     </div>
+    <Error :msg="receivedData.msg" v-if="error" />
   </div>
 </template>
 

@@ -49,9 +49,8 @@
           </p>
         </footer>
       </div>
-
-      <Error :msg="receivedData.msg" v-if="error" />
     </div>
+    <Error :msg="receivedData.msg" v-if="error" />
   </div>
 </template>
 
@@ -60,11 +59,10 @@ import TextInput from '@/components/TextInput.vue'
 import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
-  mixins: [servicePage],
   name: 'tts-page',
+  mixins: [servicePage],
   components: {
-    TextInput,
-    Error
+    TextInput
   },
   data: () => ({
     text: '',

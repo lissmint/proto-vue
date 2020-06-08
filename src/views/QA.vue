@@ -20,7 +20,7 @@
         placeholder="Enter text in the input field"
         :maxlength="service.options.maxLength"
         :disabled="isRunning"
-        v-model="text"
+        v-model="fragment"
       />
       <TextInput
         placeholder="Enter a question"
@@ -30,61 +30,49 @@
       />
 
       <p>
-        <textarea
-          id="qa-qanet-question"
-          placeholder="Enter a question."
-          class="w3-input w3-border"
-          style="resize:none;   max-width: 900px;"
-          rows="3"
-          maxlength="5000"
-        ></textarea>
-        <span
-          id="qa-qanet-question-length"
-          class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
-          >0/100</span
-        >
-      </p>
-
-      <p>
         <button
           class="w3-button w3-teal"
-          :disabled="isRunning || !question || !text"
+          :disabled="isRunning || !question || !fragment"
         >
           Run
         </button>
         <i
           class="fa fa-spinner w3-spin w3-center"
           style="font-size:20px;"
-          v-if="isRunnig"
+          v-if="isRunning"
         ></i>
       </p>
 
-      <div class="w3-card-4" style="  max-width: 900px;">
+      <div class="w3-card-4" style="  max-width: 900px;" v-if="result">
         <header class="w3-container w3-light-gray">
           <h2>Result</h2>
         </header>
 
         <div class="w3-container">
-          <p>Answer.</p>
+          <p>{{ receivedData.response }}</p>
         </div>
 
         <footer class="w3-container w3-light-gray">
           <p class="w3-panel w3-leftbar w3-border-teal">
-            Question.
+            {{ receivedData.question }}
           </p>
         </footer>
       </div>
     </div>
+    <Error :msg="receivedData.msg" v-if="error" />
   </div>
 </template>
 
 <script>
 import servicePage from '@/mixins/servicePage.mixin'
+import TextInput from '@/components/TextInput.vue'
 
 export default {
   name: 'qa-page',
+  mixins: [servicePage],
+  components: { TextInput },
   data: () => ({
-    text: '',
+    fragment: '',
     question: ''
   }),
   computed: {
@@ -92,13 +80,13 @@ export default {
       return {
         event: this.service.url,
         question: this.question,
-        fragment: this.text
+        fragment: this.fragment
       }
     }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
-    this.text = ''
+    this.fragment = ''
     this.question = ''
     this.userData = null
     next()
