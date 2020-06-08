@@ -9,6 +9,7 @@
       <TextInput
         placeholder="Enter text in the input field"
         :maxlength="service.options.maxLength"
+        :rows="3"
         :disabled="isRunning"
         v-model="text"
       />

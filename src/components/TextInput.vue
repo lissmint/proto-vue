@@ -6,6 +6,7 @@
       style="resize: vertical; max-width: 900px;"
       :maxlength="maxlength"
       :value="value"
+      :rows="rows"
       :disabled="disabled"
       @input="$emit('input', $event.target.value)"
     ></textarea>
@@ -20,7 +21,7 @@
 <script>
 export default {
   name: 'text-input',
-  props: ['placeholder', 'maxlength', 'disabled', 'value'],
+  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows'],
   data: () => ({}),
   beforeRouteUpdate(to, from, next) {
     this.text = ''

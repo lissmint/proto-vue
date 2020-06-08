@@ -19,12 +19,14 @@
       <TextInput
         placeholder="Enter text in the input field"
         :maxlength="service.options.maxLength"
+        :rows="6"
         :disabled="isRunning"
         v-model="fragment"
       />
       <TextInput
         placeholder="Enter a question"
         :maxlength="service.options.questionMaxLength"
+        :rows="3"
         :disabled="isRunning"
         v-model="question"
       />

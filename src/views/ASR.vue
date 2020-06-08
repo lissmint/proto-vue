@@ -76,7 +76,7 @@ export default {
     createFile(file) {
       var reader = new FileReader()
       this.rawData = new ArrayBuffer()
-      this.getFileName(this.$refs.fileInput.value)
+      this.assignFileName(this.$refs.fileInput.value)
 
       var vm = this
       reader.onload = e => {
@@ -85,7 +85,7 @@ export default {
 
       reader.readAsArrayBuffer(file)
     },
-    getFileName(path) {
+    assignFileName(path) {
       let name = path.split('\\')
       this.fileName = name[name.length - 1]
     },
