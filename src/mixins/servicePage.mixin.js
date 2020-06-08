@@ -7,20 +7,17 @@ export default {
     time: null
   }),
   computed: {
+    // get selected service data by url
     service() {
       if (this.$route.params)
         return this.$store.getters.allServices.find(
           s => s.url === this.$route.params.id
         )
       return null
-    },
-    fullName() {
-      let name = this.service.title
-      this.service.tags.forEach(tag => (name += ' ' + tag))
-      return name
     }
   },
   methods: {
+    //handle Run
     sendData() {
       this.time = Date.now()
       this.isRunning = true
@@ -29,6 +26,7 @@ export default {
       this.onMessage()
       this.service.ws.send(JSON.stringify(this.userData))
     },
+    //handle websocket onmessage event
     onMessage() {
       let vm = this
       this.service.ws.onmessage = msg => {

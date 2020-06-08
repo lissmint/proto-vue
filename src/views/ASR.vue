@@ -67,6 +67,7 @@ export default {
     fileName: ''
   }),
   methods: {
+    // handle file upload
     onFileChange(e) {
       var file = e.target.files || e.dataTransfer.files
       if (!file.length) return
@@ -88,6 +89,7 @@ export default {
       let name = path.split('\\')
       this.fileName = name[name.length - 1]
     },
+    // handle run
     sendData() {
       this.service.ws.binaryType = 'arraybuffer'
       this.time = Date.now()

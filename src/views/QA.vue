@@ -76,6 +76,7 @@ export default {
     question: ''
   }),
   computed: {
+    //form userData
     userData() {
       return {
         event: this.service.url,

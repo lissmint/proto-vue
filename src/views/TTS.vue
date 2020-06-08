@@ -65,18 +65,26 @@ export default {
     TextInput
   },
   data: () => ({
-    text: '',
-    userData: null
+    text: ''
   }),
-  watch: {
-    text() {
-      this.userData = { event: this.service.url, text: this.text }
+  computed: {
+    // get service fullname
+    fullName() {
+      let name = this.service.title
+      this.service.tags.forEach(tag => (name += ' ' + tag))
+      return name
+    },
+    // form userData
+    userData() {
+      return {
+        event: this.service.url,
+        text: this.text
+      }
     }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
     this.text = ''
-    this.userData = null
     next()
   }
 }
