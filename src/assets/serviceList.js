@@ -118,6 +118,42 @@ export default [
     url: 'w2l',
     ws: null,
     options: {}
+  },
+  {
+    title: 'QANet FastText',
+    familyName: 'qa',
+    active: false,
+    tags: ['EN', 'SQuAD 1.1'],
+    url: 'qanet',
+    ws: null,
+    options: {
+      maxLength: 1000,
+      questionMaxLength: 100
+    }
+  },
+  {
+    title: 'QANet ELMo',
+    familyName: 'qa',
+    active: false,
+    tags: ['EN', 'SQuAD 1.1'],
+    url: 'elmo-qanet',
+    ws: null,
+    options: {
+      maxLength: 1000,
+      questionMaxLength: 100
+    }
+  },
+  {
+    title: 'BERT Base',
+    familyName: 'qa',
+    active: false,
+    tags: ['EN', 'SQuAD 1.1'],
+    url: 'bert',
+    ws: null,
+    options: {
+      maxLength: 320,
+      questionMaxLength: 64
+    }
   }
 ]
 

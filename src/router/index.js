@@ -21,6 +21,11 @@ const routes = [
     component: () => import('../views/ASR.vue')
   },
   {
+    path: '/qa/:id',
+    name: 'QA',
+    component: () => import('../views/QA.vue')
+  },
+  {
     path: '*',
     component: () => import('../views/404.vue')
   }
