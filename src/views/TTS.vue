@@ -56,15 +56,11 @@
 </template>
 
 <script>
-import TextInput from '@/components/TextInput.vue'
 import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
   name: 'tts-page',
   mixins: [servicePage],
-  components: {
-    TextInput
-  },
   data: () => ({
     text: ''
   }),

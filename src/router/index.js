@@ -24,6 +24,11 @@ const routes = [
     name: 'QA',
     component: () => import('../views/QA.vue')
   },
+  {
+    path: '/nmt/:id',
+    name: 'NMT',
+    component: () => import('../views/NMT.vue')
+  },
   // зарегистрировать новый роут ПЕРЕД 404
   {
     path: '*',

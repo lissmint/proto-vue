@@ -154,6 +154,17 @@ export default [
       maxLength: 320,
       questionMaxLength: 64
     }
+  },
+  {
+    title: 'Transformer',
+    familyName: 'nmt',
+    active: false,
+    tags: ['Translator'],
+    url: 'tr',
+    ws: null,
+    options: {
+      maxLength: 128
+    }
   }
 ]
 
