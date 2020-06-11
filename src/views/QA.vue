@@ -37,21 +37,14 @@
         @run="sendData"
       />
       <!-- Result Box -->
-      <div class="w3-card-4" style="  max-width: 900px;" v-if="result">
-        <header class="w3-container w3-light-gray">
-          <h2>Result</h2>
-        </header>
-
-        <div class="w3-container">
-          <p>{{ receivedData.response }}</p>
-        </div>
-
-        <footer class="w3-container w3-light-gray">
-          <p class="w3-panel w3-leftbar w3-border-teal">
-            {{ receivedData.question }}
-          </p>
-        </footer>
-      </div>
+      <Result :receivedData="receivedData" v-if="result">
+        <template #main>
+          {{ receivedData.response }}
+        </template>
+        <template #footer>
+          {{ receivedData.question }}
+        </template>
+      </Result>
     </div>
     <Error :msg="receivedData.msg" v-if="error" />
   </div>

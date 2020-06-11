@@ -27,21 +27,14 @@
         @run="sendData"
       />
 
-      <div class="w3-card-4" style="max-width: 900px;" v-if="result">
-        <header class="w3-container w3-light-gray">
-          <h2>Result</h2>
-        </header>
-
-        <div class="w3-container">
-          <p id="asr-w2l-answer">{{ receivedData.text }}</p>
-        </div>
-
-        <footer class="w3-container w3-light-gray">
-          <p class="w3-panel w3-leftbar w3-border-teal">
-            {{ fileName }}
-          </p>
-        </footer>
-      </div>
+      <Result :receivedData="receivedData" :fileName="fileName" v-if="result">
+        <template #main>
+          {{ receivedData.text }}
+        </template>
+        <template #footer>
+          {{ fileName }}
+        </template>
+      </Result>
     </div>
     <Error :msg="receivedData.msg" v-if="error" />
   </div>
