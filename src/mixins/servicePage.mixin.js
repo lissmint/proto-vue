@@ -1,4 +1,5 @@
 export default {
+  title: context => `${context.service.title}`,
   data: () => ({
     result: false,
     error: false,
@@ -14,6 +15,14 @@ export default {
           s => s.url === this.$route.params.id
         )
       return null
+    }
+  },
+  watch: {
+    service: {
+      deep: true,
+      handler() {
+        this.$title = `${this.service.title}`
+      }
     }
   },
   methods: {

@@ -11,3 +11,10 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Page Not Found',
+  title: 'Page Not Found'
+}
+</script>

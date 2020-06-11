@@ -14,20 +14,11 @@
         v-model="text"
       />
 
-      <p>
-        <button
-          class="w3-button w3-teal"
-          @click="sendData()"
-          :disabled="!text.length || isRunning"
-        >
-          Run
-        </button>
-        <i
-          v-if="isRunning"
-          class="fa fa-spinner w3-spin w3-center"
-          style="font-size:20px;"
-        ></i>
-      </p>
+      <RunBtn
+        :disabled="!text.length || isRunning"
+        :isRunning="isRunning"
+        @run="sendData"
+      />
 
       <div class="w3-card-4" style="max-width: 900px;" v-if="result">
         <header class="w3-container w3-light-gray">
@@ -60,6 +51,7 @@ import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
   name: 'tr-page',
+  title: context => `${context.fullName}`,
   mixins: [servicePage],
   data: () => ({
     text: ''
@@ -74,6 +66,14 @@ export default {
       return {
         event: this.service.url,
         en_text: this.text
+      }
+    }
+  },
+  watch: {
+    service: {
+      deep: true,
+      handler() {
+        this.$title = `${this.fullName}`
       }
     }
   },

@@ -21,20 +21,11 @@
         />
       </p>
 
-      <p>
-        <button
-          class="w3-button w3-teal"
-          @click="sendData"
-          :disabled="isRunning || !rawData"
-        >
-          Run
-        </button>
-        <i
-          class="fa fa-spinner w3-spin w3-center"
-          style="font-size:20px;"
-          v-if="isRunning"
-        ></i>
-      </p>
+      <RunBtn
+        :disabled="isRunning || !rawData"
+        :isRunning="isRunning"
+        @run="sendData"
+      />
 
       <div class="w3-card-4" style="max-width: 900px;" v-if="result">
         <header class="w3-container w3-light-gray">

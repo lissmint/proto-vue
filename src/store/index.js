@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import serviceList from '@/assets/serviceList'
+import serviceList from '@/serviceList'
 
 Vue.use(Vuex)
 

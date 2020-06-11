@@ -15,7 +15,7 @@
           >Examples</a
         >
       </p>
-
+      <!-- Input -->
       <TextInput
         placeholder="Enter text in the input field"
         :maxlength="service.options.maxLength"
@@ -30,21 +30,13 @@
         :disabled="isRunning"
         v-model="question"
       />
-
-      <p>
-        <button
-          class="w3-button w3-teal"
-          :disabled="isRunning || !question || !fragment"
-        >
-          Run
-        </button>
-        <i
-          class="fa fa-spinner w3-spin w3-center"
-          style="font-size:20px;"
-          v-if="isRunning"
-        ></i>
-      </p>
-
+      <!-- Button and spinner -->
+      <RunBtn
+        :disabled="isRunning || !question || !fragment"
+        :isRunning="isRunning"
+        @run="sendData"
+      />
+      <!-- Result Box -->
       <div class="w3-card-4" style="  max-width: 900px;" v-if="result">
         <header class="w3-container w3-light-gray">
           <h2>Result</h2>
@@ -87,10 +79,8 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
-    this.userData = null
     this.fragment = ''
     this.question = ''
-    this.userData = null
     next()
   }
 }
