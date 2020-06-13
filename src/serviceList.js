@@ -165,6 +165,18 @@ export default [
     options: {
       maxLength: 128
     }
+  },
+  //
+  {
+    title: 'MaLaMEDA Base',
+    familyName: 'mlm',
+    active: false,
+    tags: [],
+    url: 'mlmb',
+    ws: null,
+    options: {
+      maxLength: 128
+    }
   }
 ]
 

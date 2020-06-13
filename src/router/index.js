@@ -29,6 +29,16 @@ const routes = [
     name: 'NMT',
     component: () => import('../views/NMT.vue')
   },
+  {
+    path: '/mig/:id',
+    name: 'MIG',
+    component: () => import('../views/MIG.vue')
+  },
+  {
+    path: '/mlm/:id',
+    name: 'MLM',
+    component: () => import('../views/MLM.vue')
+  },
   // зарегистрировать новый роут ПЕРЕД 404
   {
     path: '*',
