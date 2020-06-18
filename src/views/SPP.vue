@@ -11,25 +11,29 @@
     <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
     <div class="w3-container model" v-else>
       <h2>Sample sentences</h2>
-      <div
-        class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
-        style="resize:none;   max-width: 900px;"
-      >
-        <p>The fat ugly smelly cat ate my uncle.</p>
-      </div>
+      <div>
+        <div
+          class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
+          style="resize:none;   max-width: 900px;"
+        >
+          <p>The fat ugly smelly cat ate my uncle.</p>
+        </div>
 
-      <div
-        class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
-        style="resize:none;   max-width: 900px;"
-      >
-        <p>My sister works as a guide in Moscow and sees a lot of tourists.</p>
-      </div>
+        <div
+          class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
+          style="resize:none;   max-width: 900px;"
+        >
+          <p>
+            My sister works as a guide in Moscow and sees a lot of tourists.
+          </p>
+        </div>
 
-      <div
-        class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
-        style="resize:none;   max-width: 900px;"
-      >
-        <p>Misha throws water at Masha and Masha throws water at Misha.</p>
+        <div
+          class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
+          style="resize:none;   max-width: 900px;"
+        >
+          <p>Misha throws water at Masha and Masha throws water at Misha.</p>
+        </div>
       </div>
 
       <h2>Input sentence and Run</h2>
