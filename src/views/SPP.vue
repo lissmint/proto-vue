@@ -48,7 +48,7 @@
       />
 
       <!-- ВЫВОД РЕЗУЛЬТАТА -->
-      <div v-if="result && !isRunning">
+      <div v-show="result && !isRunning">
         <canvas ref="canvas" width="0" height="100"> </canvas>
         <div>
           <p v-for="dist in distances" :key="dist">{{ dist }}</p>
@@ -64,7 +64,7 @@
 import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
-  name: 'qa-page',
+  name: 'spp-page',
   mixins: [servicePage],
   data: () => ({
     // данные страницы
@@ -146,13 +146,13 @@ export default {
             let ctx = canvas.getContext('2d')
             ctx.font = '20px Arial'
 
-            // let tokens = ["The", "fat", "ugly", "smelly", "cat", "ate", "my", "uncle."];
+            // let tokens = ['The','fat','ugly','smelly','cat','ate','my','uncle.']
             let tokens = vm.receivedData.tokens
             let tokensWidth = vm.calculateTokensWidth(tokens, ctx)
 
             canvas.width = tokensWidth.reduce(reducer) + 50
 
-            coordinates = { x: 0, y: 50 }
+            let coordinates = { x: 0, y: 50 }
 
             let i = 0
             for (i = 0; i < tokens.length; i++) {
@@ -160,7 +160,7 @@ export default {
               coordinates.x += tokensWidth[i]
             }
 
-            // edges = [[1, 2], [5, 7], [3, 4], [2, 3], [4, 5], [0, 4], [6, 7]];
+            // let edges = [[1, 2],[5, 7],[3, 4],[2, 3], [4, 5],[0, 4],[6, 7]]
             let edges = vm.receivedData.edges
             edges.sort(function(a, b) {
               return b[0] - b[1] - (a[0] - a[1])
