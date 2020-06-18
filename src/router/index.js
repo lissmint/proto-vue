@@ -39,6 +39,11 @@ const routes = [
     name: 'MLM',
     component: () => import('../views/MLM.vue')
   },
+  {
+    path: '/spp/:id',
+    name: 'SPP',
+    component: () => import('../views/SPP.vue')
+  },
   // зарегистрировать новый роут ПЕРЕД 404
   {
     path: '*',

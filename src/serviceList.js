@@ -1,4 +1,5 @@
 export default [
+  // TTS
   {
     title: 'Tacotron 2.1', // title used in sidebar
     familyName: 'tts', // family of services name
@@ -110,6 +111,7 @@ export default [
       maxLength: 140
     }
   },
+  // ASR
   {
     title: 'Wave2Letter+',
     familyName: 'asr',
@@ -119,6 +121,7 @@ export default [
     ws: null,
     options: {}
   },
+  // QA
   {
     title: 'QANet FastText',
     familyName: 'qa',
@@ -155,6 +158,7 @@ export default [
       questionMaxLength: 64
     }
   },
+  // NMT
   {
     title: 'Transformer',
     familyName: 'nmt',
@@ -166,7 +170,7 @@ export default [
       maxLength: 128
     }
   },
-  //
+  // MIG
   {
     title: 'cmomgcb',
     familyName: 'mig',
@@ -178,12 +182,47 @@ export default [
       maxLength: 128
     }
   },
+  // MLM
   {
     title: 'MaLaMEDA Base',
     familyName: 'mlm',
     active: false,
     tags: [],
     url: 'mlmb',
+    ws: null,
+    options: {
+      maxLength: 128
+    }
+  },
+  // SPP
+  {
+    title: 'Google BERT Large',
+    familyName: 'spp',
+    active: false,
+    tags: [],
+    url: '16',
+    ws: null,
+    options: {
+      maxLength: 128
+    }
+  },
+  {
+    title: 'Google BERT Base',
+    familyName: 'spp',
+    active: false,
+    tags: [],
+    url: '7',
+    ws: null,
+    options: {
+      maxLength: 128
+    }
+  },
+  {
+    title: 'BERTRAM GuCh',
+    familyName: 'spp',
+    active: false,
+    tags: [],
+    url: 'suarez',
     ws: null,
     options: {
       maxLength: 128
