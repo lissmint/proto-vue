@@ -48,22 +48,8 @@
       <TextInput
         placeholder="Input your sentence here"
         rows="6"
-        maxlength="128"
+        maxlength="20000"
       />
-      <!-- <textarea
-      id="mi-cmomgcb-sentence"
-      placeholder="Here your sentence"
-      class="w3-input w3-border"
-      style="resize:none;   max-width: 900px;"
-      rows="6"
-      maxlength="20000"
-    ></textarea>
-    <span
-      id="mi-cmomgcb-sentence-length"
-      class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
-      >0/128</span
-    > -->
-      <!-- </p> -->
 
       <RunBtn
         :disabled="isRunning || !sentence"
@@ -71,8 +57,7 @@
         @run="sendData"
       />
 
-      <div id="mi-cmomgcb-container" v-if="result">
-        <!-- <p> -->
+      <div id="mi-cmomgcb-container" v-if="result && !isRunnig">
         <h2>Mutial Information Heatmap</h2>
         <div class="slidecontainer">
           <input
@@ -89,7 +74,6 @@
           id="mi-cmomgcb-plot-container"
           style="max-height: 1500px; max-width: 1500px;"
         ></div>
-        <!-- </p> -->
 
         <h2>Mutial Information Pairs</h2>
 

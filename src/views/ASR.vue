@@ -27,7 +27,11 @@
         @run="sendData"
       />
 
-      <Result :receivedData="receivedData" :fileName="fileName" v-if="result">
+      <Result
+        :receivedData="receivedData"
+        :fileName="fileName"
+        v-if="result && !isRunning"
+      >
         <template #main>
           {{ receivedData.text }}
         </template>

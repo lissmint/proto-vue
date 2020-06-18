@@ -37,7 +37,7 @@
         @run="sendData"
       />
       <!-- Result Box -->
-      <Result :receivedData="receivedData" v-if="result">
+      <Result :receivedData="receivedData" v-if="result && !isRunning">
         <template #main>
           {{ receivedData.response }}
         </template>

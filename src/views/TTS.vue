@@ -20,7 +20,7 @@
         @run="sendData"
       />
 
-      <Result :receivedData="receivedData" v-if="result">
+      <Result :receivedData="receivedData" v-if="result && !isRunning">
         <template #main>
           <audio
             style="max-width:95%;"

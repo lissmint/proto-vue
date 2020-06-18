@@ -43,7 +43,7 @@
       <h2>Input sentence and Run</h2>
       <TextInput
         placeholder="Input your text here"
-        :maxlength="service.options.maxlenght"
+        :maxlength="service.options.maxLength"
         :rows="6"
         :disabled="isRunning"
         v-model="sentence"
@@ -56,7 +56,7 @@
       />
 
       <!-- ВЫВОД РЕЗУЛЬТАТА -->
-      <div id="mi-mlmb-container" v-if="result">
+      <div id="mi-mlmb-container" v-if="result && !isRunnig">
         <h2>Mutial Information</h2>
         <div class="slidecontainer">
           <input
@@ -84,7 +84,7 @@
 import servicePage from '@/mixins/servicePage.mixin'
 
 export default {
-  name: 'qa-page',
+  name: 'mlm-page',
   mixins: [servicePage],
   data: () => ({
     // данные страницы
@@ -98,6 +98,9 @@ export default {
         sentence: this.sentence
       }
     }
+  },
+  methods: {
+    drawChart(data, key) {}
   },
   //reset component data fields
   beforeRouteUpdate(to, from, next) {
