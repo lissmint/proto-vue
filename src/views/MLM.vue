@@ -56,7 +56,8 @@
       />
 
       <!-- ВЫВОД РЕЗУЛЬТАТА -->
-      <div id="mi-mlmb-container" v-if="result && !isRunnig">
+      <div v-if="result && !isRunnig">
+        <!-- container-->
         <h2>Mutial Information</h2>
         <div class="slidecontainer">
           <input
@@ -66,30 +67,35 @@
             value="450"
             step="150"
             class="slider"
-            id="mi-mlmb-myRange"
+            @input="setSize"
           />
         </div>
-        <div
-          id="mi-mlmb-plot-container"
-          style="max-height: 1500px; max-width: 900px;"
-        ></div>
+        <div style="max-height: 1500px; max-width: 900px;">
+          <highcharts v-for="(chart, i) in charts" :key="i" :options="chart" />
+        </div>
+        <!-- plot container-->
       </div>
     </div>
 
-    <Error :msg="receivedData.msg" v-if="error" />
+    <Error :msg="receivedData.msg" v-if="error && !isRunning" />
   </div>
 </template>
 
 <script>
 import servicePage from '@/mixins/servicePage.mixin'
+import { Chart } from 'highcharts-vue'
 
 export default {
   name: 'mlm-page',
   mixins: [servicePage],
   data: () => ({
     // данные страницы
-    sentence: ''
+    sentence: '',
+    charts: []
   }),
+  components: {
+    highcharts: Chart
+  },
   computed: {
     // формируем объект userData
     userData() {
@@ -100,11 +106,139 @@ export default {
     }
   },
   methods: {
-    drawChart(data, key) {}
+    setSize(event) {
+      for (chart in this.charts) {
+        chart.chart.width = even.target.value
+        chart.chart.height = even.target.value - 50
+      }
+    },
+    drawChart(data, key) {
+      // $plot_container.append(`<div id="${key}" class="mi-heatmap"></div>`)
+
+      data.mi = data.plots[key].data.map(function(row, i) {
+        return row.map(function(col, j) {
+          return [j, i, col]
+        })
+      })
+
+      dat = []
+      for (var i = 0; i < data.mi.length; i++) {
+        dat = dat.concat(data.mi[i])
+      }
+
+      this.charts.push({
+        chart: {
+          type: 'heatmap',
+          marginTop: 40,
+          marginBottom: 80,
+          plotBorderWidth: 1,
+          width: 450,
+          height: 400
+        },
+
+        title: {
+          text: key
+        },
+
+        xAxis: {
+          categories: data.plots[key].x,
+          minPadding: 0,
+          maxPadding: 0,
+          startOnTick: false,
+          endOnTick: false,
+          title: {
+            enabled: false,
+            text: 'x'
+          }
+        },
+
+        yAxis: {
+          categories: data.plots[key].y,
+          minPadding: 0,
+          maxPadding: 0,
+          startOnTick: false,
+          endOnTick: false,
+          title: {
+            enabled: false,
+            text: 'y'
+          }
+        },
+
+        colorAxis: {
+          minColor: '#003399',
+          maxColor: '#e6ebf5'
+        },
+
+        legend: {
+          align: 'right',
+          layout: 'vertical',
+          margin: 0,
+          verticalAlign: 'top',
+          y: 25,
+          symbolHeight: 280
+        },
+
+        tooltip: {
+          formatter: function() {
+            return (
+              'x:' +
+              this.series.xAxis.categories[this.point.x] +
+              '<br>y:' +
+              this.series.yAxis.categories[this.point.y] +
+              '<br>z:' +
+              this.point.value +
+              ''
+            )
+          }
+        },
+
+        series: [
+          {
+            name: 'Sales per employee',
+            turboThreshold: 100000,
+            borderWidth: 0.2,
+            data: dat,
+            dataLabels: {
+              enabled: false,
+              color: '#000000'
+            }
+          }
+        ]
+      })
+    },
+    onMessage() {
+      let vm = this
+      this.service.ws.onmessage = msg => {
+        vm.receivedData = JSON.parse(msg.data)
+
+        switch (vm.receivedData.event) {
+          case 'error':
+            vm.error = true
+            break
+
+          case 'success':
+            console.log(`Success with time: ${(Date.now() - vm.time) / 1000} s`)
+            console.log(vm.receivedData)
+
+            for (key in vm.receivedData.plots) {
+              vm.drawChart(vm.receivedData, key)
+            }
+            vm.result = true
+            break
+
+          case 'default':
+            console.log('default')
+            break
+        }
+
+        vm.isRunning = false
+      }
+    }
   },
   //reset component data fields
   beforeRouteUpdate(to, from, next) {
     this.sentence = ''
+    this.charts = ''
     next()
   }
 }

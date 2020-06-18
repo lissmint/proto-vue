@@ -4,11 +4,7 @@
     <div class="w3-container model" v-if="!service.active">
       <h2>{{ fullName }} is currently unavailable. Please check in later.</h2>
     </div>
-    <div
-      id="BERT Сlassifier Cleaned Mask Over Mask Contribution GuCh"
-      class="w3-container model"
-      style="display:none"
-    >
+    <div class="w3-container model">
       <h2>Sample sentences</h2>
       <div
         class="w3-panel w3-pale-blue w3-leftbar w3-border-blue"
@@ -49,15 +45,18 @@
         placeholder="Input your sentence here"
         rows="6"
         maxlength="20000"
+        :disabled="isRunning"
+        v-model="sentence"
       />
 
       <RunBtn
         :disabled="isRunning || !sentence"
-        :isRunning="isRunnig"
+        :isRunning="isRunning"
         @run="sendData"
       />
 
-      <div id="mi-cmomgcb-container" v-if="result && !isRunnig">
+      <div v-if="result && !isRunnig">
+        <!-- container -->
         <h2>Mutial Information Heatmap</h2>
         <div class="slidecontainer">
           <input
@@ -67,17 +66,17 @@
             value="900"
             step="150"
             class="slider"
-            id="mi-cmomgcb-myRange"
+            @input="setSize"
           />
+          <!-- slider -->
         </div>
-        <div
-          id="mi-cmomgcb-plot-container"
-          style="max-height: 1500px; max-width: 1500px;"
-        ></div>
+        <highcharts ref="chart" :options="chartOptions"></highcharts>
+        <!-- plot-container -->
 
         <h2>Mutial Information Pairs</h2>
 
-        <table id="mi-cmomgcb-table" class="w3-table-all">
+        <table class="w3-table-all" ref="table">
+          <!-- table -->
           <thead>
             <tr class="w3-teal">
               <th>Word 1</th>
@@ -88,18 +87,37 @@
         </table>
       </div>
     </div>
+    <Error :msg="receivedData.msg" v-if="error && !isRunning" />
   </div>
 </template>
 
 <script>
 import servicePage from '@/mixins/servicePage.mixin'
+import { Chart } from 'highcharts-vue'
 
 export default {
   name: 'mig-page',
   mixins: [servicePage],
   data: () => ({
-    sentence: ''
+    sentence: '',
+    chartOptions: {
+      chart: {
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1,
+        width: 900,
+        height: 850
+      },
+
+      title: {
+        text: 'MI visualization'
+      }
+    }
   }),
+  components: {
+    highcharts: Chart
+  },
   computed: {
     fullName() {
       let name = this.service.title
@@ -108,10 +126,146 @@ export default {
     },
     userData() {
       return {
-        event: this.service.url,
+        // event: this.service.url,
+        event: 'success',
         sentence: this.sentence
       }
     }
+  },
+  methods: {
+    setSize(event) {
+      this.chartOptions.chart.width = event.target.value
+      this.chartOptions.chart.height = event.target.value - 50
+    },
+    onMessage() {
+      let vm = this
+      this.service.ws.onmessage = msg => {
+        vm.receivedData = JSON.parse(msg.data)
+
+        switch (vm.receivedData.event) {
+          case 'error':
+            vm.error = true
+            break
+
+          case 'success':
+            console.log(`Success with time: ${(Date.now() - vm.time) / 1000} s`)
+            vm.receivedData.mi = vm.receivedData.mi.map(function(row, i) {
+              return row.map(function(col, j) {
+                return [j, i, col]
+              })
+            })
+
+            let data = []
+            for (var i = 0; i < vm.receivedData.mi.length; i++) {
+              data = data.concat(vm.receivedData.mi[i])
+            }
+
+            vm.chartOptions = {
+              chart: {
+                type: 'heatmap',
+                marginTop: 40,
+                marginBottom: 80,
+                plotBorderWidth: 1,
+                width: 900,
+                height: 850
+              },
+
+              title: {
+                text: 'MI visualization'
+              },
+
+              xAxis: {
+                categories: vm.receivedData.tokens_x,
+                minPadding: 0,
+                maxPadding: 0,
+                startOnTick: false,
+                endOnTick: false,
+                title: {
+                  enabled: true,
+                  text: vm.receivedData.label_y
+                }
+              },
+
+              yAxis: {
+                categories: vm.receivedData.tokens,
+                minPadding: 0,
+                maxPadding: 0,
+                startOnTick: false,
+                endOnTick: false,
+                title: {
+                  enabled: true,
+                  text: vm.receivedData.label_x
+                }
+              },
+
+              colorAxis: {
+                minColor: '#003399',
+                maxColor: '#e6ebf5'
+              },
+
+              legend: {
+                align: 'right',
+                layout: 'vertical',
+                margin: 0,
+                verticalAlign: 'top',
+                y: 25,
+                symbolHeight: 280
+              },
+
+              tooltip: {
+                formatter: function() {
+                  return (
+                    'x:' +
+                    this.series.xAxis.categories[this.point.x] +
+                    '<br>y:' +
+                    this.series.yAxis.categories[this.point.y] +
+                    '<br>z:' +
+                    this.point.value +
+                    ''
+                  )
+                }
+              },
+
+              series: [
+                {
+                  name: 'Sales per employee',
+                  turboThreshold: 100000,
+                  borderWidth: 0.2,
+                  data: data,
+                  dataLabels: {
+                    enabled: false,
+                    color: '#000000'
+                  }
+                }
+              ]
+            }
+
+            vm.receivedData.miout.forEach(row => {
+              row = row.split(' ')
+              vm.$refs.table.append(
+                `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${parseFloat(
+                  row[2]
+                ).toFixed(3)}</td></tr>`
+              )
+            })
+
+            vm.result = true
+            break
+
+          case 'default':
+            console.log('default')
+            break
+        }
+
+        vm.isRunning = false
+      }
+    }
+  },
+  //reset component data fields
+  beforeRouteUpdate(to, from, next) {
+    this.sentence = ''
+    this.chartOptions = null
+    next()
   }
 }
 </script>

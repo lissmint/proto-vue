@@ -40,7 +40,7 @@
         </template>
       </Result>
     </div>
-    <Error :msg="receivedData.msg" v-if="error" />
+    <Error :msg="receivedData.msg" v-if="error && !isRunning" />
   </div>
 </template>
 

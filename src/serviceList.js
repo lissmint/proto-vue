@@ -168,6 +168,17 @@ export default [
   },
   //
   {
+    title: 'cmomgcb',
+    familyName: 'mig',
+    active: false,
+    tags: [],
+    url: 'cmomgcb',
+    ws: null,
+    options: {
+      maxLength: 128
+    }
+  },
+  {
     title: 'MaLaMEDA Base',
     familyName: 'mlm',
     active: false,
