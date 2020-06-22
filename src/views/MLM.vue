@@ -71,7 +71,12 @@
           />
         </div>
         <div style="max-height: 1500px; max-width: 900px;">
-          <highcharts v-for="(chart, i) in charts" :key="i" :options="chart" />
+          <highcharts
+            v-for="(chart, i) in charts"
+            :key="i"
+            :options="chart"
+            class="mi-heatmap"
+          />
         </div>
         <!-- plot container-->
       </div>
@@ -113,8 +118,6 @@ export default {
       }
     },
     drawChart(data, key) {
-      // $plot_container.append(`<div id="${key}" class="mi-heatmap"></div>`)
-
       data.mi = data.plots[key].data.map(function(row, i) {
         return row.map(function(col, j) {
           return [j, i, col]

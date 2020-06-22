@@ -55,7 +55,7 @@
         @run="sendData"
       />
 
-      <div v-if="result && !isRunnig">
+      <div v-show="result && !isRunnig">
         <!-- container -->
         <h2>Mutial Information Heatmap</h2>
         <div class="slidecontainer">
@@ -70,7 +70,11 @@
           />
           <!-- slider -->
         </div>
-        <highcharts ref="chart" :options="chartOptions"></highcharts>
+        <highcharts
+          v-if="result"
+          :options="chartOptions"
+          class="mi-heatmap"
+        ></highcharts>
         <!-- plot-container -->
 
         <h2>Mutial Information Pairs</h2>
@@ -263,8 +267,29 @@ export default {
   },
   //reset component data fields
   beforeRouteUpdate(to, from, next) {
+    this.$refs.table.innerHTML = `<thead>
+            <tr class="w3-teal">
+              <th>Word 1</th>
+              <th>Word 2</th>
+              <th>MI</th>
+            </tr>
+          </thead>`
+
     this.sentence = ''
-    this.chartOptions = null
+    this.chartOptions = {
+      chart: {
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1,
+        width: 900,
+        height: 850
+      },
+
+      title: {
+        text: 'MI visualization'
+      }
+    }
     next()
   }
 }
