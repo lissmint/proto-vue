@@ -44,6 +44,11 @@ const routes = [
     name: 'SPP',
     component: () => import('../views/SPP.vue')
   },
+  {
+    path: '/sentsim/:id',
+    name: 'SentSim',
+    component: () => import('../views/SentSim.vue')
+  },
   // зарегистрировать новый роут ПЕРЕД 404
   {
     path: '*',
