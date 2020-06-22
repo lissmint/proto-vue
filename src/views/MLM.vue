@@ -241,7 +241,7 @@ export default {
   //reset component data fields
   beforeRouteUpdate(to, from, next) {
     this.sentence = ''
-    this.charts = ''
+    this.charts = []
     next()
   }
 }
