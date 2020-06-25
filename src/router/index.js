@@ -30,6 +30,11 @@ const routes = [
     component: () => import('../views/NMT.vue')
   },
   {
+    path: '/mig/similarity/:id',
+    name: 'similarity',
+    component: () => import('../views/Similarity.vue')
+  },
+  {
     path: '/mig/:id',
     name: 'MIG',
     component: () => import('../views/MIG.vue')

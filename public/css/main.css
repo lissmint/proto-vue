@@ -1,16 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Economica:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap');
 
 @font-face {
   font-family: Acript;
   src: url(./fonts/Acript\Silicon\Valley.ttf);
 }
 
+@font-face {
+  font-family: Exan;
+  src: url(./fonts/Exan-Regular.ttf);
+}
+
+@font-face {
+  font-family: Skyer;
+  src: url(./fonts/Skyer-Regular.otf);
+}
+
 h1 {
   font-family: 'Economica', Acript;
 }
 h1 b {
-  font-family: 'Allerta Stencil';
+  font-family: Skyer;
   letter-spacing: 2px;
   font-weight: normal;
   color: #333333;

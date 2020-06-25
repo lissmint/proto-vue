@@ -173,7 +173,7 @@ export default [
   // MIG
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Cleaned Mask Over Mask Contribution GuCh',
+    fullTitle: 'BERT Classifier Cleaned Mask Over Mask Contribution GuCh',
     familyName: 'mig',
     active: false,
     tags: ['cleaned mask over mask'],
@@ -185,7 +185,7 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh source',
+    fullTitle: 'BERT Classifier Mask Over Mask Iterate GuCh source',
     familyName: 'mig',
     active: false,
     tags: ['source', 'mask over mask iterate'],
@@ -197,7 +197,7 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh direct',
+    fullTitle: 'BERT Classifier Mask Over Mask Iterate GuCh direct',
     familyName: 'mig',
     active: false,
     tags: ['direct', 'mask over mask iterate'],
@@ -209,7 +209,7 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh merged',
+    fullTitle: 'BERT Classifier Mask Over Mask Iterate GuCh merged',
     familyName: 'mig',
     active: false,
     tags: ['merged', 'mask over mask iterate'],
@@ -221,7 +221,7 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh max',
+    fullTitle: 'BERT Classifier Mask Over Mask Iterate GuCh max',
     familyName: 'mig',
     active: false,
     tags: ['max', 'mask over mask iterate'],
@@ -233,7 +233,7 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh mod',
+    fullTitle: 'BERT Classifier Mask Over Mask Iterate GuCh mod',
     familyName: 'mig',
     active: false,
     tags: ['max', 'mask over mask iterate'],
@@ -245,7 +245,7 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh modmax',
+    fullTitle: 'BERT Classifier Mask Over Mask Iterate GuCh modmax',
     familyName: 'mig',
     active: false,
     tags: ['modmax', 'mask over mask iterate'],
@@ -257,11 +257,11 @@ export default [
   },
   {
     title: 'BERTRAM',
-    fullTitle: 'BERT Сlassifier Context Similarity GuCh',
+    fullTitle: 'BERT Classifier Context Similarity GuCh',
     familyName: 'mig',
     active: false,
     tags: ['context similarity'],
-    url: 'simgcb',
+    url: 'similarity/simgcb',
     ws: null,
     options: {
       wordLimit: 128

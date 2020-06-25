@@ -1,8 +1,10 @@
 <template>
   <div>
-    <AppHeader :title="fullName" />
+    <AppHeader :title="service.fullTitle" />
     <div class="w3-container model" v-if="!service.active">
-      <h2>{{ fullName }} is currently unavailable. Please check in later.</h2>
+      <h2>
+        {{ service.fullTitle }} is currently unavailable. Please check in later.
+      </h2>
     </div>
     <div class="w3-container model">
       <h2>Sample sentences</h2>
@@ -128,11 +130,6 @@ export default {
     highcharts: Chart
   },
   computed: {
-    fullName() {
-      let name = this.service.title
-      this.service.tags.forEach(tag => (name += ' ' + tag))
-      return name
-    },
     userData() {
       return {
         event: this.service.url,
