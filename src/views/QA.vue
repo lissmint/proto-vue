@@ -18,14 +18,16 @@
       <!-- Input -->
       <TextInput
         placeholder="Enter text in the input field"
-        :maxlength="service.options.maxLength"
+        maxlength="40000"
+        :wordcount="service.options.fragmentWordLimit"
         :rows="6"
         :disabled="isRunning"
         v-model="fragment"
       />
       <TextInput
         placeholder="Enter a question"
-        :maxlength="service.options.questionMaxLength"
+        maxlength="5000"
+        :wordcount="service.options.questionWordLimit"
         :rows="3"
         :disabled="isRunning"
         v-model="question"

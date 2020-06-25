@@ -130,8 +130,8 @@ export default [
     url: 'qanet',
     ws: null,
     options: {
-      maxLength: 1000,
-      questionMaxLength: 100
+      fragmentWordLimit: 1000,
+      questionWordLimit: 100
     }
   },
   {
@@ -142,8 +142,8 @@ export default [
     url: 'elmo-qanet',
     ws: null,
     options: {
-      maxLength: 1000,
-      questionMaxLength: 100
+      fragmentWordLimit: 1000,
+      questionWordLimit: 100
     }
   },
   {
@@ -154,8 +154,8 @@ export default [
     url: 'bert',
     ws: null,
     options: {
-      maxLength: 320,
-      questionMaxLength: 64
+      fragmentWordLimit: 320,
+      questionWordLimit: 64
     }
   },
   // NMT
@@ -167,7 +167,7 @@ export default [
     url: 'tr',
     ws: null,
     options: {
-      maxLength: 128
+      wordLimit: 128
     }
   },
   // MIG
@@ -179,7 +179,7 @@ export default [
     url: 'cmomgcb',
     ws: null,
     options: {
-      maxLength: 128
+      wordLimit: 128
     }
   },
   // MLM
@@ -191,7 +191,7 @@ export default [
     url: 'mlmb',
     ws: null,
     options: {
-      maxLength: 128
+      wordLimit: 128
     }
   },
   // SPP
@@ -203,7 +203,7 @@ export default [
     url: '16',
     ws: null,
     options: {
-      maxLength: 128
+      wordLimit: 128
     }
   },
   {
@@ -214,7 +214,7 @@ export default [
     url: '7',
     ws: null,
     options: {
-      maxLength: 128
+      wordLimit: 128
     }
   },
   {
@@ -225,18 +225,7 @@ export default [
     url: 'suarez',
     ws: null,
     options: {
-      maxLength: 128
+      wordLimit: 128
     }
   }
 ]
-
-// {
-//   title: "",
-//   familyName: "tts",
-//   active: false,
-//   tags: ["EN", "LJ", "BIG"],
-//   url: "tacotron1",
-//   ws: null,
-//   options: {},
-//   data: null
-// },

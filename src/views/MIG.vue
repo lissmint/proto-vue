@@ -45,6 +45,7 @@
         placeholder="Input your sentence here"
         rows="6"
         maxlength="20000"
+        :wordcount="service.options.wordLimit"
         :disabled="isRunning"
         v-model="sentence"
       />

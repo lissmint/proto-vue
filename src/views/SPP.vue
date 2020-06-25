@@ -39,7 +39,8 @@
       <h2>Input sentence and Run</h2>
       <TextInput
         placeholder="Input your sentence here"
-        :maxlength="service.options.maxLength /* 2000*/"
+        maxlength="20000"
+        :wordcount="service.options.wordLimit"
         :rows="6"
         :disabled="isRunning"
         v-model="sentence"

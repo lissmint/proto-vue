@@ -8,7 +8,8 @@
       <h2>Input text in English language and press Run</h2>
       <TextInput
         placeholder="Enter text in the input field"
-        :maxlength="service.options.maxLength"
+        maxlength="20000"
+        :wordcount="service.options.wordLimit"
         :rows="5"
         :disabled="isRunning"
         v-model="text"

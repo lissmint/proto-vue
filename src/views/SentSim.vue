@@ -26,7 +26,8 @@
       <!-- ЗДЕСЬ НЕОБХОДИМЫЕ ЭЛЕМЕНТЫ ВВОДА -->
       <TextInput
         placeholder="Input your sentence here"
-        :maxlength="service.options.maxLength /* 20000*/"
+        maxlength="20000"
+        :wordcount="service.options.wordLimit"
         :rows="6"
         :disabled="isRunning"
         v-model="sentence"

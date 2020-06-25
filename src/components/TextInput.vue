@@ -13,7 +13,8 @@
     <span
       class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
     >
-      {{ value.length }} / {{ maxlength }}</span
+      {{ wordcount ? (value ? value.split(' ').length : '0') : value.length }} /
+      {{ wordcount ? wordcount + ' words' : maxlength }}</span
     >
   </p>
 </template>
@@ -21,7 +22,7 @@
 <script>
 export default {
   name: 'text-input',
-  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows'],
+  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows', 'wordcount'],
   data: () => ({}),
   beforeRouteUpdate(to, from, next) {
     this.text = ''
