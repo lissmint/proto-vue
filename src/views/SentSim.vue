@@ -73,6 +73,10 @@
 <script>
 import servicePage from '@/mixins/servicePage.mixin'
 import { Chart } from 'highcharts-vue'
+import HighCharts from 'highcharts'
+import heatmap from 'highcharts/modules/heatmap'
+
+heatmap(HighCharts)
 
 export default {
   name: 'sentsim-page',
