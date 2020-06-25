@@ -24,7 +24,6 @@ export default new Vuex.Store({
       state.services.forEach((val, idx, arr) => {
         arr[idx].ws = services[idx].ws
       })
-      console.log(state.services)
     },
     incResponses(state) {
       state.responses++
@@ -81,7 +80,9 @@ export default new Vuex.Store({
             `[close] Соединение ${url} закрыто чисто, код=${event.code} причина=${event.reason}`
           )
         } else {
-          console.log('[close] Соединение прервано, code = ' + event.code)
+          console.log(
+            `[close] Соединение ${url} прервано, code = ${event.code}`
+          )
         }
         commit('setActive', {
           url,

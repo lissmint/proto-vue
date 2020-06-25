@@ -172,11 +172,96 @@ export default [
   },
   // MIG
   {
-    title: 'cmomgcb',
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Cleaned Mask Over Mask Contribution GuCh',
     familyName: 'mig',
     active: false,
-    tags: [],
+    tags: ['cleaned mask over mask'],
     url: 'cmomgcb',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh source',
+    familyName: 'mig',
+    active: false,
+    tags: ['source', 'mask over mask iterate'],
+    url: 'momi_source',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh direct',
+    familyName: 'mig',
+    active: false,
+    tags: ['direct', 'mask over mask iterate'],
+    url: 'momi_direct',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh merged',
+    familyName: 'mig',
+    active: false,
+    tags: ['merged', 'mask over mask iterate'],
+    url: 'momi_merged',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh max',
+    familyName: 'mig',
+    active: false,
+    tags: ['max', 'mask over mask iterate'],
+    url: 'momi_max',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh mod',
+    familyName: 'mig',
+    active: false,
+    tags: ['max', 'mask over mask iterate'],
+    url: 'momi_mod',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Mask Over Mask Iterate GuCh modmax',
+    familyName: 'mig',
+    active: false,
+    tags: ['modmax', 'mask over mask iterate'],
+    url: 'momi_modmax',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTRAM',
+    fullTitle: 'BERT Сlassifier Context Similarity GuCh',
+    familyName: 'mig',
+    active: false,
+    tags: ['context similarity'],
+    url: 'simgcb',
     ws: null,
     options: {
       wordLimit: 128
