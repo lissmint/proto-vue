@@ -95,7 +95,7 @@ export default {
     userData() {
       return {
         event: this.service.url,
-        sentences: this.sentences.split('\n').filter(function(item) {
+        sentences: this.sentence.split('\n').filter(function(item) {
           return item.length > 3
         })
       }
@@ -108,7 +108,7 @@ export default {
         chart.chart.height = even.target.value - 50
       }
     },
-    senData() {
+    sendData() {
       this.time = Date.now()
       this.isRunning = true
       this.result = false
@@ -117,7 +117,9 @@ export default {
 
       if (this.userData.sentences.length < 2) {
         this.isRunning = false
-        this.receivedData.msg = `More than 1 sentence is expected, but given ${this.userData.sentences.length}!`
+        this.receivedData = {
+          msg: `More than 1 sentence is expected, but given ${this.userData.sentences.length}!`
+        }
         this.error = true
       } else {
         this.service.ws.send(JSON.stringify(this.userData))

@@ -227,5 +227,39 @@ export default [
     options: {
       wordLimit: 128
     }
+  },
+  // SEMSIM
+  {
+    title: 'BERT Google WordPiece',
+    familyName: 'semsim',
+    active: false,
+    tags: [],
+    url: 'sentsim',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTAM Google WordPiece',
+    familyName: 'semsim',
+    active: false,
+    tags: [],
+    url: 'sentsimo',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
+  },
+  {
+    title: 'BERTAM GuCh WordPiece',
+    familyName: 'semsim',
+    active: false,
+    tags: ['in work'],
+    url: 'sentsimguch',
+    ws: null,
+    options: {
+      wordLimit: 128
+    }
   }
 ]
