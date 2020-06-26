@@ -141,57 +141,43 @@ export default {
   computed: {
     // формируем объект userData
     userData() {
-      return {
-        event: 'success',
-        temperature: parseFloat(this.temperature),
-        start: this.start,
-        max_len: parseInt(this.max),
-        temperature: parseFloat(this.temperature),
-        run_name: this.selected ? this.selected.twitter : '',
-        name: this.selected ? this.selected.name : '',
-        top_k: parseInt(this.k),
-        start_tweet: 'start',
-        generated_tweet: 'pickle pickles'
+      switch (this.service.options.type) {
+        case 'tg':
+          return {
+            event: this.service.url,
+            start: this.start,
+            min_len: parseInt(this.min),
+            max_len: parseInt(this.max),
+            temperature: parseFloat(this.temperature)
+          }
+
+        case 'tggpt':
+          return {
+            event: this.service.url,
+            start: this.start,
+            max_len: parseInt(this.max),
+            temperature: parseFloat(this.temperature),
+            run_name: this.selected.twitter,
+            name: this.selected.name,
+            top_k: parseInt(this.k)
+          }
+
+        case 'tggptdai':
+          return {
+            event: this.service.url,
+            start: this.start,
+            max_len: parseInt(this.max),
+            temperature: parseFloat(this.temperature),
+            run_name: '' + this.steps,
+            name: '' + this.steps,
+            top_k: parseInt(this.k)
+          }
+
+        case 'default':
+          console.log('default')
+          break
       }
     },
-    // userData() {
-    //   switch (this.service.options.type) {
-    //     case 'tg':
-    //       return {
-    //         event: this.service.url,
-    //         start: this.start,
-    //         min_len: parseInt(this.min),
-    //         max_len: parseInt(this.max),
-    //         temperature: parseFloat(this.temperature)
-    //       }
-
-    //     case 'tggpt':
-    //       return {
-    //         event: this.service.url,
-    //         start: this.start,
-    //         max_len: parseInt(this.max),
-    //         temperature: parseFloat(this.temperature),
-    //         run_name: this.selected.twitter,
-    //         name: this.selected.name,
-    //         top_k: parseInt(this.k)
-    //       }
-
-    //     case 'tggptdai':
-    //       return {
-    //         event: this.service.url,
-    //         start: this.start,
-    //         max_len: parseInt(this.max),
-    //         temperature: parseFloat(this.temperature),
-    //         run_name: '' + this.steps,
-    //         name: '' + this.steps,
-    //         top_k: parseInt(this.k)
-    //       }
-
-    //     case 'default':
-    //       console.log('default')
-    //       break
-    //   }
-    // },
     personMap() {
       if (this.service.options.type == 'tggpt') {
         this.selected = null
