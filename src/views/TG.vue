@@ -84,10 +84,10 @@
       <Result :receivedData="receivedData" v-if="result">
         <template #main>
           <div v-if="receivedData.serviceType == 'tg'">
-            {{ receivedData.generated_tweet }}
+            {{ receivedData.start_tweet }}
           </div>
 
-          <ul v-else>
+          <ul class="w3-ul w3-light-gray" v-else>
             <li
               class="w3-display-container"
               v-for="(item, i) in receivedData.list"
@@ -96,7 +96,7 @@
               T = {{ item.temperature }} | {{ item.name }} |
               {{ item.tweet }}
               <span
-                onclick="this.parentElement.style.display='none'"
+                @click="deleteItem(i)"
                 class="w3-button w3-transparent w3-display-right"
                 >&times;</span
               >
@@ -104,7 +104,7 @@
           </ul>
         </template>
         <template #footer>
-          <div v-if="service.options.type">
+          <div v-if="service.options.type == 'tg'">
             {{ receivedData.generated_tweet }}
           </div>
         </template>
@@ -141,43 +141,57 @@ export default {
   computed: {
     // формируем объект userData
     userData() {
-      switch (this.service.options.type) {
-        case 'tg':
-          return {
-            event: this.service.url,
-            start: this.start,
-            min_len: parseInt(this.min),
-            max_len: parseInt(this.max),
-            temperature: parseFloat(this.temperature)
-          }
-
-        case 'tggpt':
-          return {
-            event: this.service.url,
-            start: this.start,
-            max_len: parseInt(this.max),
-            temperature: parseFloat(this.temperature),
-            run_name: this.selected.twitter,
-            name: this.selected.name,
-            top_k: parseInt(this.k)
-          }
-
-        case 'tggptdai':
-          return {
-            event: this.service.url,
-            start: this.start,
-            max_len: parseInt(this.max),
-            temperature: parseFloat(this.temperature),
-            run_name: '' + this.steps,
-            name: '' + this.steps,
-            top_k: parseInt(this.k)
-          }
-
-        case 'default':
-          console.log('default')
-          break
+      return {
+        event: 'success',
+        temperature: parseFloat(this.temperature),
+        start: this.start,
+        max_len: parseInt(this.max),
+        temperature: parseFloat(this.temperature),
+        run_name: this.selected ? this.selected.twitter : '',
+        name: this.selected ? this.selected.name : '',
+        top_k: parseInt(this.k),
+        start_tweet: 'start',
+        generated_tweet: 'pickle pickles'
       }
     },
+    // userData() {
+    //   switch (this.service.options.type) {
+    //     case 'tg':
+    //       return {
+    //         event: this.service.url,
+    //         start: this.start,
+    //         min_len: parseInt(this.min),
+    //         max_len: parseInt(this.max),
+    //         temperature: parseFloat(this.temperature)
+    //       }
+
+    //     case 'tggpt':
+    //       return {
+    //         event: this.service.url,
+    //         start: this.start,
+    //         max_len: parseInt(this.max),
+    //         temperature: parseFloat(this.temperature),
+    //         run_name: this.selected.twitter,
+    //         name: this.selected.name,
+    //         top_k: parseInt(this.k)
+    //       }
+
+    //     case 'tggptdai':
+    //       return {
+    //         event: this.service.url,
+    //         start: this.start,
+    //         max_len: parseInt(this.max),
+    //         temperature: parseFloat(this.temperature),
+    //         run_name: '' + this.steps,
+    //         name: '' + this.steps,
+    //         top_k: parseInt(this.k)
+    //       }
+
+    //     case 'default':
+    //       console.log('default')
+    //       break
+    //   }
+    // },
     personMap() {
       if (this.service.options.type == 'tggpt') {
         this.selected = null
@@ -224,6 +238,9 @@ export default {
     }
   },
   methods: {
+    deleteItem(index) {
+      this.resultList.splice(index, 1)
+    },
     onMessage() {
       let vm = this
       this.service.ws.onmessage = msg => {
@@ -237,7 +254,7 @@ export default {
           case 'success':
             console.log(`Success with time: ${(Date.now() - vm.time) / 1000} s`)
 
-            if (vm.service.type != 'tg') {
+            if (vm.service.options.type != 'tg') {
               vm.resultList.push({
                 temperature: vm.receivedData.temperature,
                 name: vm.receivedData.name,
@@ -272,6 +289,7 @@ export default {
     this.k = 0
     this.temperature = 0.7
     this.selected = ''
+    this.resultList = []
     next()
   }
 }
