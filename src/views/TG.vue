@@ -11,7 +11,7 @@
     <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
     <div class="w3-container model" v-else>
       <h2>Input start tweet text and Run</h2>
-      <!-- ЗДЕСЬ НЕОБХОДИМЫЕ ЭЛЕМЕНТЫ ВВОДА -->
+
       <TextInput
         placeholder="Input your start tweet here"
         rows="6"
@@ -21,51 +21,61 @@
         v-model="start"
       />
 
-      <Slider
-        label="Min Lenght"
-        min="5"
-        max="100"
-        v-model="min"
-        v-if="service.options.type == 'tg'"
-      />
+      <!-- select & sliders group -->
+      <div style="max-width:275px">
+        <Slider
+          label="Min Lenght"
+          min="5"
+          max="100"
+          v-model="min"
+          v-if="service.options.type == 'tg'"
+        />
 
-      <Slider
-        label="Choose training steps"
-        min="5000"
-        max="115000"
-        step="5000"
-        v-model="steps"
-        v-if="service.options.type == 'tggptdai'"
-      />
+        <Slider
+          label="Choose training steps"
+          min="5000"
+          max="115000"
+          step="5000"
+          v-model="steps"
+          v-if="service.options.type == 'tggptdai'"
+        />
 
-      <!-- select -->
+        <v-select
+          class="select"
+          :options="personMap"
+          v-model="selected"
+          label="name"
+          v-if="service.options.type == 'tggpt'"
+        >
+        </v-select>
 
-      <Slider
-        label="Max"
-        :min="service.options.maxLow"
-        :max="service.options.maxHigh"
-        v-model="max"
-      />
+        <Slider
+          label="Max"
+          :min="service.options.maxLow"
+          :max="service.options.maxHigh"
+          v-model="max"
+        />
 
-      <Slider
-        label="Top K"
-        min="0"
-        max="100"
-        step="10"
-        v-model="k"
-        v-if="service.options.type == 'tggptdai' || 'tggpt'"
-      />
+        <Slider
+          label="Top K"
+          min="0"
+          max="100"
+          step="10"
+          v-model="k"
+          v-if="service.options.type == 'tggptdai' || 'tggpt'"
+        />
 
-      <Slider
-        label="Temperature"
-        min="0.2"
-        max="1.5"
-        step="0.1"
-        v-model="temperature"
-      />
+        <Slider
+          label="Temperature"
+          min="0.2"
+          max="1.5"
+          step="0.1"
+          v-model="temperature"
+        />
+      </div>
 
       <RunBtn
-        :disabled="isRunning || !start /* условия отключения кнопки */"
+        :disabled="isRunning || !start || selected === null"
         :isRunning="isRunning"
         @run="sendData"
       />
@@ -108,6 +118,8 @@
 <script>
 import servicePage from '@/mixins/servicePage.mixin'
 import Slider from '@/components/Slider.vue'
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css'
 
 export default {
   name: 'tg-page',
@@ -123,7 +135,8 @@ export default {
     resultList: []
   }),
   components: {
-    Slider
+    Slider,
+    'v-select': vSelect
   },
   computed: {
     // формируем объект userData
@@ -144,8 +157,8 @@ export default {
             start: this.start,
             max_len: parseInt(this.max),
             temperature: parseFloat(this.temperature),
-            run_name: this.personMap[this.selected],
-            name: this.selected,
+            run_name: this.selected.twitter,
+            name: this.selected.name,
             top_k: parseInt(this.k)
           }
 
@@ -163,6 +176,50 @@ export default {
         case 'default':
           console.log('default')
           break
+      }
+    },
+    personMap() {
+      if (this.service.options.type == 'tggpt') {
+        this.selected = null
+        return [
+          { name: 'Donald J. Trump', twitter: 'trump' },
+          { name: 'John McAfee', twitter: 'officialmcafee' },
+          { name: 'Barack Obama', twitter: 'barackobama' },
+          { name: 'Elon Musk', twitter: 'elonmusk' },
+          { name: 'Bernie Sanders', twitter: 'berniesanders' },
+          { name: 'Joe Biden', twitter: 'joebiden' },
+          { name: 'Joe Rogan', twitter: 'joerogan' },
+          { name: 'Hillary Clinton', twitter: 'hillaryclinton' },
+          { name: 'Jimmy Fallon', twitter: 'jimmyfallon' },
+          { name: 'Dwayne Johnson', twitter: 'therock' },
+          { name: 'Kim Kardashian', twitter: 'kimkardashian' },
+          { name: 'Bill Gates', twitter: 'billgates' },
+          { name: 'Kevin Hart', twitter: 'kevinhart4real' },
+          { name: 'Katy Perry', twitter: 'katyperry' },
+          { name: 'Ellen DeGeneres', twitter: 'theellenshow' },
+          { name: 'Neil deGrasse Tyson', twitter: 'neiltyson' },
+          { name: 'Phil Plait', twitter: 'badastronomer' },
+          { name: 'Lady Gaga', twitter: 'ladygaga' },
+          { name: "Conan O'Brien", twitter: 'conanobrien' },
+          { name: 'Richard Dawkins', twitter: 'richarddawkins' },
+          { name: 'Chris Hadfield', twitter: 'cmdr_hadfield' },
+          { name: 'Ricky Gervais', twitter: 'rickygervais' },
+          { name: 'God', twitter: 'thetweetofgod' },
+          { name: 'Sam Harris', twitter: 'samharrisorg' },
+          { name: 'Justin Bieber', twitter: 'justinbieber' },
+          { name: 'Virginia Hughes', twitter: 'virginiahughes' },
+          { name: 'Deborah Blum', twitter: 'deborahblum' },
+          { name: 'Brian Switek', twitter: 'laelaps' },
+          { name: 'Rebecca Skloot', twitter: 'rebeccaskloot' },
+          { name: 'Deepak Chopra', twitter: 'deepakchopra' },
+          { name: 'Bethany Brookshire', twitter: 'beebrookshire' },
+          { name: 'Dr Jordan B Peterson', twitter: 'jordanbpeterson' },
+          { name: 'Eric Weinstein', twitter: 'ericrweinstein' },
+          { name: 'TicBot', twitter: 'ticbot' },
+          { name: 'Wint', twitter: 'dril' },
+          { name: 'Terence McKenna', twitter: 'terencemckenna_' },
+          { name: 'DAI', twitter: 'ben_dataset' }
+        ]
       }
     }
   },
@@ -214,6 +271,7 @@ export default {
     this.steps = 10000
     this.k = 0
     this.temperature = 0.7
+    this.selected = ''
     next()
   }
 }
