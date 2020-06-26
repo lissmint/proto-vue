@@ -255,6 +255,7 @@ export default [
       wordLimit: 128
     }
   },
+  // MIG SIMILARITY
   {
     title: 'BERTRAM',
     fullTitle: 'BERT Classifier Context Similarity GuCh',
@@ -345,6 +346,63 @@ export default [
     ws: null,
     options: {
       wordLimit: 128
+    }
+  },
+  // TG
+  {
+    title: 'BERT LSTM',
+    familyName: 'tg',
+    active: false,
+    tags: [],
+    url: 'tg',
+    ws: null,
+    options: {
+      type: 'tg',
+      wordLimit: 128,
+      maxLow: 5,
+      maxHigh: 100
+    }
+  },
+  {
+    title: 'Transformer XL WORD',
+    familyName: 'tg',
+    active: false,
+    tags: [],
+    url: 'tgxl',
+    ws: null,
+    options: {
+      type: 'tg',
+      wordLimit: 128,
+      maxLow: 5,
+      maxHigh: 100
+    }
+  },
+  {
+    title: 'Flow Transformer',
+    familyName: 'tg',
+    active: false,
+    tags: [],
+    url: 'tggpt',
+    ws: null,
+    options: {
+      type: 'tggpt',
+      wordLimit: 1024,
+      maxLow: 0,
+      maxHigh: 1024
+    }
+  },
+  {
+    title: 'Flow Transformer DAI',
+    familyName: 'tg',
+    active: false,
+    tags: ['in work'],
+    url: 'tggptdai',
+    ws: null,
+    options: {
+      type: 'tggptdai',
+      wordLimit: 1024,
+      maxLow: 0,
+      maxHigh: 1024
     }
   }
 ]

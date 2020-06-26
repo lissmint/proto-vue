@@ -22,11 +22,6 @@
 <script>
 export default {
   name: 'text-input',
-  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows', 'wordcount'],
-  data: () => ({}),
-  beforeRouteUpdate(to, from, next) {
-    this.text = ''
-    next()
-  }
+  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows', 'wordcount']
 }
 </script>

@@ -54,6 +54,11 @@ const routes = [
     name: 'SemSim',
     component: () => import('../views/SemSim.vue')
   },
+  {
+    path: '/tg/:id',
+    name: 'TG',
+    component: () => import('../views/TG.vue')
+  },
   // зарегистрировать новый роут ПЕРЕД 404
   {
     path: '*',
