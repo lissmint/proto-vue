@@ -121,110 +121,107 @@ export default {
           msg: `More than 1 sentence is expected, but given ${this.userData.sentences.length}!`
         }
         this.error = true
-      } else {
-        this.service.ws.send(JSON.stringify(this.userData))
+        return
       }
+
+      this.service.ws.send(JSON.stringify(this.userData))
     },
-    drawChart() {
-      function drowChart(data, key) {
-        index++
-
-        data.mi = data.map(function(row, i) {
-          return row.map(function(col, j) {
-            return [j, i, col]
-          })
+    drawChart(data, key) {
+      data.mi = data.map(function(row, i) {
+        return row.map(function(col, j) {
+          return [j, i, col]
         })
-        var indexes = new Array(data.length)
+      })
 
-        for (let i = 0; i < data.length; i++) {
-          indexes[i] = i
-        }
-
-        dat = []
-        for (var i = 0; i < data.mi.length; i++) {
-          dat = dat.concat(data.mi[i])
-        }
-
-        this.charts.push({
-          chart: {
-            width: '900',
-            height: '900',
-            type: 'heatmap',
-            marginTop: 40,
-            marginBottom: 80,
-            plotBorderWidth: 1
-          },
-
-          title: {
-            text: 'Similarity Matrix'
-          },
-
-          xAxis: {
-            categories: indexes,
-            minPadding: 0,
-            maxPadding: 0,
-            startOnTick: false,
-            endOnTick: false,
-            title: {
-              enabled: false,
-              text: 'x'
-            }
-          },
-
-          yAxis: {
-            categories: indexes,
-            minPadding: 0,
-            maxPadding: 0,
-            startOnTick: false,
-            endOnTick: false,
-            title: {
-              enabled: false,
-              text: 'y'
-            }
-          },
-
-          colorAxis: {
-            minColor: '#003399',
-            maxColor: '#e6ebf5'
-          },
-
-          legend: {
-            align: 'right',
-            layout: 'vertical',
-            margin: 0,
-            verticalAlign: 'top',
-            y: 25,
-            symbolHeight: 280
-          },
-
-          tooltip: {
-            formatter: function() {
-              return (
-                'x:' +
-                this.series.xAxis.categories[this.point.x] +
-                '<br>y:' +
-                this.series.yAxis.categories[this.point.y] +
-                '<br>z:' +
-                this.point.value +
-                ''
-              )
-            }
-          },
-
-          series: [
-            {
-              name: 'Sales per employee',
-              turboThreshold: 100000,
-              borderWidth: 0.2,
-              data: dat,
-              dataLabels: {
-                enabled: false,
-                color: '#000000'
-              }
-            }
-          ]
-        })
+      var indexes = new Array(data.length)
+      for (let i = 0; i < data.length; i++) {
+        indexes[i] = i
       }
+
+      dat = []
+      for (var i = 0; i < data.mi.length; i++) {
+        dat = dat.concat(data.mi[i])
+      }
+
+      this.charts.push({
+        chart: {
+          width: '900',
+          height: '900',
+          type: 'heatmap',
+          marginTop: 40,
+          marginBottom: 80,
+          plotBorderWidth: 1
+        },
+
+        title: {
+          text: 'Similarity Matrix'
+        },
+
+        xAxis: {
+          categories: indexes,
+          minPadding: 0,
+          maxPadding: 0,
+          startOnTick: false,
+          endOnTick: false,
+          title: {
+            enabled: false,
+            text: 'x'
+          }
+        },
+
+        yAxis: {
+          categories: indexes,
+          minPadding: 0,
+          maxPadding: 0,
+          startOnTick: false,
+          endOnTick: false,
+          title: {
+            enabled: false,
+            text: 'y'
+          }
+        },
+
+        colorAxis: {
+          minColor: '#003399',
+          maxColor: '#e6ebf5'
+        },
+
+        legend: {
+          align: 'right',
+          layout: 'vertical',
+          margin: 0,
+          verticalAlign: 'top',
+          y: 25,
+          symbolHeight: 280
+        },
+
+        tooltip: {
+          formatter: function() {
+            return (
+              'x:' +
+              this.series.xAxis.categories[this.point.x] +
+              '<br>y:' +
+              this.series.yAxis.categories[this.point.y] +
+              '<br>z:' +
+              this.point.value +
+              ''
+            )
+          }
+        },
+
+        series: [
+          {
+            name: 'Sales per employee',
+            turboThreshold: 100000,
+            borderWidth: 0.2,
+            data: dat,
+            dataLabels: {
+              enabled: false,
+              color: '#000000'
+            }
+          }
+        ]
+      })
     },
     onMessage() {
       let vm = this

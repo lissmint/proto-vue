@@ -129,7 +129,6 @@ export default {
             console.log(`Success with time: ${(Date.now() - vm.time) / 1000} s`)
 
             vm.receivedData.mi.forEach(function(col, i) {
-              debugger
               vm.tokens.push(vm.receivedData.tokens[i])
 
               col.forEach(function(item, j) {
