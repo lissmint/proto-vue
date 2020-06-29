@@ -10,19 +10,31 @@
   font-family: Exan;
   src: url(./fonts/Exan-Regular.ttf);
 }
-
+/* н - перевернутая u */
 @font-face {
   font-family: Skyer;
   src: url(./fonts/Skyer-Regular.otf);
 }
 
+@font-face {
+  font-family: Ailerons;
+  src: url(./fonts/Ailerons-Regular.otf);
+}
+
+@font-face {
+  font-family: Alexana;
+  src: url(./fonts/AlexanaNeue.ttf);
+}
+
 h1 {
   font-family: 'Economica', Acript;
 }
+
 h1 b {
-  font-family: Exan;
-  letter-spacing: 2px;
+  font-family: Skyer;
+  font-style: normal;
   font-weight: normal;
+  letter-spacing: 2px;
   color: #333333;
 }
 .item {

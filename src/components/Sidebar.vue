@@ -12,7 +12,7 @@
     </button>
     <div class="w3-container w3-border-bottom w3-center">
       <router-link to="/"
-        ><h1 class="w3-wide"><b>naint</b></h1></router-link
+        ><h1 class="w3-wide"><b>NAINT</b></h1></router-link
       >
     </div>
 
