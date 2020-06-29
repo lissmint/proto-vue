@@ -129,8 +129,8 @@ export default {
     min: 20,
     max: 80,
     steps: 10000,
-    temperature: 0.7, //this.service.options.temperature || null,
-    k: 0, // this.service.options.k || null,
+    temperature: 0.7,
+    k: 0,
     selected: '',
     resultList: []
   }),
