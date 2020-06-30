@@ -11,9 +11,11 @@
       Close &times;
     </button>
     <div class="w3-container w3-border-bottom w3-center">
-      <router-link to="/"
-        ><h1 class="w3-wide"><b>NAINT</b></h1></router-link
-      >
+      <router-link to="/">
+        <div class="logo-container">
+          <img class="logo" src="@/assets/logo.svg" alt="Logo: NAINT" />
+        </div>
+      </router-link>
     </div>
 
     <NavCategory
@@ -172,5 +174,13 @@ export default {
 <style scoped>
 a {
   text-decoration: none;
+}
+
+.logo {
+  height: 30px;
+}
+
+.logo-container {
+  padding: 22px;
 }
 </style>
