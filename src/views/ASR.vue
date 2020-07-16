@@ -86,21 +86,17 @@ export default {
       this.result = false
       this.error = false
       this.onMessage()
-      console.log(this.rawData)
       this.data = new Uint8Array(this.rawData)
-      let string = this.data.join('/')
-      console.table(this.data)
-      console.log(string)
       this.service.ws.send(
         JSON.stringify({
           rawData: this.data
         })
       )
-      // console.log(this.rawData)
     }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
+    this.data = null
     this.rawData = null
     this.fileName = ''
     next()
