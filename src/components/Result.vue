@@ -21,6 +21,6 @@
 <script>
 export default {
   name: 'result',
-  props: ['receivedData', 'fileName']
+  props: { receivedData: Object, fileName: String }
 }
 </script>

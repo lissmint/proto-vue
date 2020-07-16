@@ -52,6 +52,7 @@ export default {
   mixins: [servicePage],
   data: () => ({
     rawData: null,
+    data: null,
     fileName: ''
   }),
   methods: {
@@ -79,13 +80,23 @@ export default {
     },
     // handle run
     sendData() {
-      this.service.ws.binaryType = 'arraybuffer'
+      // this.service.ws.binaryType = 'arraybuffer'
       this.time = Date.now()
       this.isRunning = true
       this.result = false
       this.error = false
       this.onMessage()
-      this.service.ws.send(this.rawData)
+      console.log(this.rawData)
+      this.data = new Uint8Array(this.rawData)
+      let string = this.data.join('/')
+      console.table(this.data)
+      console.log(string)
+      this.service.ws.send(
+        JSON.stringify({
+          rawData: this.data
+        })
+      )
+      // console.log(this.rawData)
     }
   },
   beforeRouteUpdate(to, from, next) {

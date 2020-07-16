@@ -18,6 +18,6 @@
 <script>
 export default {
   name: 'run-btn',
-  props: ['disabled', 'isRunning']
+  props: { disabled: Boolean, isRunning: Boolean }
 }
 </script>

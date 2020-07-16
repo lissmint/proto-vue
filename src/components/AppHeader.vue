@@ -15,7 +15,9 @@
 <script>
 export default {
   name: 'app-header',
-  props: ['title'],
+  props: {
+    title: String
+  },
   methods: {
     w3_open() {
       document.getElementById('mySidebar').style.display = 'block'

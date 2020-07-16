@@ -11,7 +11,11 @@
 <script>
 export default {
   name: 'nav-category',
-  props: ['title', 'available', 'familyName'],
+  props: {
+    title: String,
+    familyName: String,
+    available: Number
+  },
   methods: {
     showModels(familyName) {
       this.$emit('showModels', familyName)

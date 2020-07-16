@@ -54,8 +54,8 @@ export default new Vuex.Store({
       let services = state.services.map(a => ({ ...a }))
       for (let s in services) {
         services[s].ws = new WebSocket(
-          // `ws://localhost:80/services/${services[s].url}/`
-          'wss://echo.websocket.org'
+          `ws://localhost:80/services/${services[s].url}/`
+          // 'wss://echo.websocket.org'
         )
         dispatch('subscribeSocket', {
           socket: services[s].ws,

@@ -26,7 +26,10 @@
 <script>
 export default {
   name: 'nav-links',
-  props: ['name', 'services']
+  props: {
+    name: String,
+    services: Array
+  }
 }
 </script>
 
