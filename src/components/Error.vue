@@ -5,7 +5,7 @@
       style="resize:none;   max-width: 900px;"
     >
       <span
-        onclick="this.parentElement.style.display='none'"
+        @click="$emit('close')"
         class="w3-button w3-red w3-large w3-display-topright"
         >&times;</span
       >

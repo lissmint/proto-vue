@@ -22,7 +22,7 @@
       </p>
 
       <RunBtn
-        :disabled="isRunning || !audio"
+        :disabled="isRunning || !audio || fileSize > 7"
         :isRunning="isRunning"
         @run="sendData"
       />
@@ -40,7 +40,13 @@
         </template>
       </Result>
     </div>
-    <Error :msg="receivedData.msg" v-if="error && !isRunning" />
+    <transition name="fade">
+      <Error
+        :msg="receivedData.msg"
+        v-if="error && !isRunning"
+        @close="error = !error"
+      />
+    </transition>
   </div>
 </template>
 
@@ -52,7 +58,8 @@ export default {
   mixins: [servicePage],
   data: () => ({
     audio: null,
-    fileName: ''
+    fileName: '',
+    fileSize: null
   }),
   computed: {
     userData() {
@@ -68,7 +75,14 @@ export default {
     },
     createFile(file) {
       var reader = new FileReader()
-      // this.audio = new ArrayBuffer()
+      this.fileSize = (file.size / (1024 * 1024)).toFixed(2)
+      if (this.fileSize > 7) {
+        this.error = true
+        this.receivedData = {
+          msg: `File size exceeds limit. Select a file with a maximum size of 7MB. Selected file size: ${this.fileSize}MB.`
+        }
+        return
+      }
       this.assignFileName(this.$refs.fileInput.value)
 
       var vm = this

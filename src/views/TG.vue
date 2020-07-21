@@ -111,7 +111,13 @@
       </Result>
     </div>
 
-    <Error :msg="receivedData.msg" v-if="error && !isRunning" />
+    <transition name="fade">
+      <Error
+        :msg="receivedData.msg"
+        v-if="error && !isRunning"
+        @close="error = !error"
+      />
+    </transition>
   </div>
 </template>
 
