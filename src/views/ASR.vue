@@ -80,19 +80,34 @@ export default {
     },
     // handle run
     sendData() {
-      // this.service.ws.binaryType = 'arraybuffer'
+      this.service.ws.binaryType = 'arraybuffer'
       this.time = Date.now()
       this.isRunning = true
       this.result = false
       this.error = false
       this.onMessage()
-      this.data = new Uint8Array(this.rawData)
-      this.service.ws.send(
-        JSON.stringify({
-          rawData: this.data
-        })
-      )
+      this.service.ws.send(this.rawData)
+      // this.data = new Uint8Array(this.rawData)
+
+      // let base64 = btoa(
+      //   new Uint8Array(this.rawData).reduce(
+      //     (data, byte) => data + String.fromCharCode(byte),
+      //     ''
+      //   )
+      // )
+      // this.service.ws.send(base64)
     }
+    // onMessage() {
+    //   let vm = this
+    //   vm.service.ws.onmessage = msg => {
+    //     vm.receivedData = {
+    //       text: 'success',
+    //       data: e.data
+    //     }
+    //     vm.result = true
+    //     vm.isRunning = false
+    //   }
+    // }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields

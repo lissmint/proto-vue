@@ -25,8 +25,10 @@
           <audio
             style="max-width:95%;"
             controls
-            :src="`${receivedData.audio_dir}${receivedData.audio_name}.wav`"
+            :src="`data:audio/wav;base64,${receivedData.audio}`"
           ></audio>
+          <!-- :src="`${receivedData.audio_dir}${receivedData.audio_name}.wav`" -->
+          <!-- :src="`data:audio/wav;base64,${receivedData.audio}`" -->
         </template>
         <template #footer>
           Enter a new text and press "Run" to try again
