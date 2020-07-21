@@ -22,7 +22,7 @@
       </p>
 
       <RunBtn
-        :disabled="isRunning || !rawData"
+        :disabled="isRunning || !audio"
         :isRunning="isRunning"
         @run="sendData"
       />
@@ -51,10 +51,14 @@ export default {
   name: 'asr-page',
   mixins: [servicePage],
   data: () => ({
-    rawData: null,
-    data: null,
+    audio: null,
     fileName: ''
   }),
+  computed: {
+    userData() {
+      return { audio: this.audio }
+    }
+  },
   methods: {
     // handle file upload
     onFileChange(e) {
@@ -64,55 +68,34 @@ export default {
     },
     createFile(file) {
       var reader = new FileReader()
-      this.rawData = new ArrayBuffer()
+      // this.audio = new ArrayBuffer()
       this.assignFileName(this.$refs.fileInput.value)
 
       var vm = this
       reader.onload = e => {
-        vm.rawData = e.target.result
+        vm.audio = e.target.result.split(',')[1]
       }
 
-      reader.readAsArrayBuffer(file)
+      reader.readAsDataURL(file)
     },
     assignFileName(path) {
       let name = path.split('\\')
       this.fileName = name[name.length - 1]
-    },
-    // handle run
-    sendData() {
-      this.service.ws.binaryType = 'arraybuffer'
-      this.time = Date.now()
-      this.isRunning = true
-      this.result = false
-      this.error = false
-      this.onMessage()
-      this.service.ws.send(this.rawData)
-      // this.data = new Uint8Array(this.rawData)
-
-      // let base64 = btoa(
-      //   new Uint8Array(this.rawData).reduce(
-      //     (data, byte) => data + String.fromCharCode(byte),
-      //     ''
-      //   )
-      // )
-      // this.service.ws.send(base64)
     }
-    // onMessage() {
-    //   let vm = this
-    //   vm.service.ws.onmessage = msg => {
-    //     vm.receivedData = {
-    //       text: 'success',
-    //       data: e.data
-    //     }
-    //     vm.result = true
-    //     vm.isRunning = false
-    //   }
+    // handle run
+    // sendData() {
+    //   // this.service.ws.binaryType = 'arraybuffer'
+    //   this.time = Date.now()
+    //   this.isRunning = true
+    //   this.result = false
+    //   this.error = false
+    //   this.onMessage()
+    //   this.service.ws.send(this.audio)
     // }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
-    this.data = null
-    this.rawData = null
+    this.audio = null
     this.fileName = ''
     next()
   }
