@@ -39,7 +39,18 @@ export default {
     onMessage() {
       let vm = this
       this.service.ws.onmessage = msg => {
-        vm.receivedData = JSON.parse(msg.data)
+        try {
+          vm.receivedData = JSON.parse(msg.data)
+        } catch (e) {
+          console.error(e)
+          console.log('received data:', msg)
+          vm.receivedData = {
+            msg: 'Something went wrong'
+          }
+          vm.error = true
+          vm.isRunning = false
+          return
+        }
 
         switch (vm.receivedData.event) {
           case 'error':
