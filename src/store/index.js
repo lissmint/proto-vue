@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     responses: 0,
     services: serviceList,
-    wsAddress: 'ws://localhost:80/services/' // `ws://localhost:80/services/${services[s].url}/`
+    wsAddress: 'ws://91.238.230.147:8209/services/' // `ws://localhost:80/services/${services[s].url}/`
   },
   mutations: {
     setActive(state, { url, readyState }) {
