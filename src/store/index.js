@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     responses: 0,
-    services: serviceList
+    services: serviceList,
+    wsAddress: 'ws://localhost:80/services/' // `ws://localhost:80/services/${services[s].url}/`
   },
   mutations: {
     setActive(state, { url, readyState }) {
@@ -54,8 +55,7 @@ export default new Vuex.Store({
       let services = state.services.map(a => ({ ...a }))
       for (let s in services) {
         services[s].ws = new WebSocket(
-          `ws://localhost:80/services/${services[s].url}/`
-          // `ws://91.238.230.147:8209/services/${services[s].url}/`
+          state.wsAddress + services[s].url + '/'
           // 'wss://echo.websocket.org'
         )
         dispatch('subscribeSocket', {
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       }
       commit('assignSockets', services)
     },
-    subscribeSocket({ commit }, { socket, url }) {
+    subscribeSocket({ commit, dispatch, state }, { socket, url }) {
       socket.onopen = function(e) {
         console.log(`[open] Соединение ${url} установлено`)
         commit('setActive', {
@@ -80,15 +80,22 @@ export default new Vuex.Store({
           console.log(
             `[close] Соединение ${url} закрыто чисто, код=${event.code} причина=${event.reason}`
           )
+          commit('setActive', {
+            url,
+            readyState: socket.readyState
+          })
         } else {
           console.log(
-            `[close] Соединение ${url} прервано, code = ${event.code}`
+            `[close] Соединение ${url} прервано, code = ${event.code}. Попытка переподключения.`
           )
+
+          let service = state.services.find(s => s.url == url)
+          service.ws = new WebSocket(state.wsAddress + url + '/')
+          dispatch('subscribeSocket', {
+            socket: service.ws,
+            url
+          })
         }
-        commit('setActive', {
-          url,
-          readyState: socket.readyState
-        })
       }
 
       socket.onerror = function(error) {

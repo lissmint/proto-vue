@@ -36,8 +36,20 @@ export default {
       this.isRunning = true
       this.result = false
       this.error = false
+      this.receivedData = null
       this.onMessage()
       this.service.ws.send(JSON.stringify(this.userData))
+
+      let vm = this
+      setTimeout(function() {
+        if (!vm.receivedData) {
+          vm.receivedData = {
+            msg: 'Timed out'
+          }
+          vm.isRunning = false
+          vm.error = true
+        }
+      }, 30000)
     },
     //handle websocket onmessage event
     onMessage() {
