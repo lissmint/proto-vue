@@ -8,18 +8,14 @@
       :value="value"
       :rows="rows"
       :disabled="disabled"
-      @input="$emit('input', $event.target.value)"
+      @input="validate"
     ></textarea>
     <span
       class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
     >
-      {{
-        wordcount
-          ? value.trim()
-            ? value.trim().split(' ').length
-            : '0'
-          : value.length
-      }}
+      <span :class="{ 'w3-text-black': isValid, 'w3-text-red': !isValid }">
+        {{ amount }}
+      </span>
       / {{ wordcount ? wordcount + ' words' : maxlength }}</span
     >
   </p>
@@ -28,6 +24,37 @@
 <script>
 export default {
   name: 'text-input',
-  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows', 'wordcount']
+  props: ['placeholder', 'maxlength', 'disabled', 'value', 'rows', 'wordcount'],
+  data: () => ({
+    isValid: true
+  }),
+  computed: {
+    amount() {
+      if (this.wordcount) {
+        if (this.value.trim()) {
+          return this.value.trim().split(' ').length
+        }
+        return 0
+      }
+      return this.value.length
+    }
+  },
+  methods: {
+    validate(e) {
+      this.$emit('input', e.target.value)
+
+      let vm = this
+      setTimeout(function() {
+        let prev = vm.isValid
+
+        if (vm.wordcount) {
+          if (vm.amount > vm.wordcount) vm.isValid = false
+          else vm.isValid = true
+
+          if (vm.prev != vm.isValid) vm.$emit('setValid', vm.isValid)
+        }
+      }, 0)
+    }
+  }
 }
 </script>
