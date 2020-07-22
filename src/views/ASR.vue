@@ -22,7 +22,7 @@
       </p>
 
       <RunBtn
-        :disabled="isRunning || !audio || fileSize > 7"
+        :disabled="isRunning || !audio || isInvalid"
         :isRunning="isRunning"
         @run="sendData"
       />
@@ -59,7 +59,9 @@ export default {
   data: () => ({
     audio: null,
     fileName: '',
-    fileSize: null
+    fileSize: null,
+    maxFileSize: 7,
+    isInvalid: false
   }),
   computed: {
     userData() {
@@ -71,19 +73,12 @@ export default {
     onFileChange(e) {
       var file = e.target.files || e.dataTransfer.files
       if (!file.length) return
+      this.error = false
       this.createFile(file[0])
     },
     createFile(file) {
       var reader = new FileReader()
-      this.fileSize = (file.size / (1024 * 1024)).toFixed(2)
-      if (this.fileSize > 7) {
-        this.error = true
-        this.receivedData = {
-          msg: `File size exceeds limit. Select a file with a maximum size of 7MB. Selected file size: ${this.fileSize}MB.`
-        }
-        return
-      }
-      this.assignFileName(this.$refs.fileInput.value)
+      this.extractFileInfo(file)
 
       var vm = this
       reader.onload = e => {
@@ -92,23 +87,32 @@ export default {
 
       reader.readAsDataURL(file)
     },
-    assignFileName(path) {
-      let name = path.split('\\')
-      this.fileName = name[name.length - 1]
+    extractFileInfo(file) {
+      this.fileSize = (file.size / (1024 * 1024)).toFixed(2)
+      if (this.fileSize > this.maxFileSize) {
+        this.receivedData = {
+          msg: `File size exceeds limit. Select a file with a maximum size of ${this.maxFileSize}MB. Selected file size: ${this.fileSize}MB.`
+        }
+        this.error = true
+        this.isInvalid = true
+        return
+      }
+
+      if (file.name.split('.')[1].toLowerCase() != 'wav') {
+        this.receivedData = {
+          msg: `Please select a wav file.`
+        }
+        this.error = true
+        this.isInvalid = true
+      } else {
+        this.fileName = file.name
+        this.isInvalid = false
+      }
     }
-    // handle run
-    // sendData() {
-    //   // this.service.ws.binaryType = 'arraybuffer'
-    //   this.time = Date.now()
-    //   this.isRunning = true
-    //   this.result = false
-    //   this.error = false
-    //   this.onMessage()
-    //   this.service.ws.send(this.audio)
-    // }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
+    this.isInvalid = false
     this.audio = null
     this.fileName = ''
     next()
