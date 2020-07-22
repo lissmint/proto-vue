@@ -50,6 +50,7 @@
         :wordcount="service.options.wordLimit"
         :disabled="isRunning"
         v-model="sentence"
+        @setValid="setValid"
       />
 
       <RunBtn

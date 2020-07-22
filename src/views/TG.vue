@@ -19,6 +19,7 @@
         :wordcount="service.options.wordLimit"
         :disabled="isRunning"
         v-model="start"
+        @setValid="setValid"
       />
 
       <!-- select & sliders group -->

@@ -5,7 +5,8 @@ export default {
     error: false,
     isRunning: false,
     receivedData: null,
-    time: null
+    time: null,
+    isValid: true
   }),
   computed: {
     // get selected service data by url
@@ -26,6 +27,9 @@ export default {
     }
   },
   methods: {
+    setValid(value) {
+      this.isValid = value
+    },
     //handle Run
     sendData() {
       this.time = Date.now()
@@ -73,6 +77,7 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     // reset mixin data fields
+    this.isValid = true
     this.result = false
     this.error = false
     this.isRunning = false

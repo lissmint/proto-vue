@@ -23,6 +23,7 @@
         :rows="6"
         :disabled="isRunning"
         v-model="fragment"
+        @setValid="setValid"
       />
       <TextInput
         placeholder="Enter a question"
@@ -31,10 +32,11 @@
         :rows="3"
         :disabled="isRunning"
         v-model="question"
+        @setValid="setValid"
       />
       <!-- Button and spinner -->
       <RunBtn
-        :disabled="isRunning || !question || !fragment"
+        :disabled="isRunning || !question || !fragment || !isValid"
         :isRunning="isRunning"
         @run="sendData"
       />

@@ -48,6 +48,7 @@
         :rows="6"
         :disabled="isRunning"
         v-model="sentence"
+        @setValid="setValid"
       />
 
       <RunBtn

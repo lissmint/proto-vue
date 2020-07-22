@@ -22,7 +22,7 @@
       </p>
 
       <RunBtn
-        :disabled="isRunning || !audio || isInvalid"
+        :disabled="isRunning || !audio || !isValid"
         :isRunning="isRunning"
         @run="sendData"
       />
@@ -60,8 +60,7 @@ export default {
     audio: null,
     fileName: '',
     fileSize: null,
-    maxFileSize: 7,
-    isInvalid: false
+    maxFileSize: 7
   }),
   computed: {
     userData() {
@@ -94,7 +93,7 @@ export default {
           msg: `File size exceeds limit. Select a file with a maximum size of ${this.maxFileSize}MB. Selected file size: ${this.fileSize}MB.`
         }
         this.error = true
-        this.isInvalid = true
+        this.isValid = false
         return
       }
 
@@ -103,16 +102,15 @@ export default {
           msg: `Please select a wav file.`
         }
         this.error = true
-        this.isInvalid = true
+        this.isValid = false
       } else {
         this.fileName = file.name
-        this.isInvalid = false
+        this.isValid = true
       }
     }
   },
   beforeRouteUpdate(to, from, next) {
     //reset component data fields
-    this.isInvalid = false
     this.audio = null
     this.fileName = ''
     next()

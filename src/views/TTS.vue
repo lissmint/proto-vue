@@ -12,6 +12,7 @@
         :rows="3"
         :disabled="isRunning"
         v-model="text"
+        @setValid="setValid"
       />
 
       <RunBtn

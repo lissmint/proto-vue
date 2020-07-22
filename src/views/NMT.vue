@@ -13,6 +13,7 @@
         :rows="5"
         :disabled="isRunning"
         v-model="text"
+        @setValid="setValid"
       />
 
       <RunBtn
