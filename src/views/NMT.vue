@@ -17,7 +17,7 @@
       />
 
       <RunBtn
-        :disabled="!text.length || isRunning"
+        :disabled="!text || isRunning || !isValid"
         :isRunning="isRunning"
         @run="sendData"
       />

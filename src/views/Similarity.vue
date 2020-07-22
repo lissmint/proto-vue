@@ -54,7 +54,7 @@
       />
 
       <RunBtn
-        :disabled="isRunning || !sentence"
+        :disabled="isRunning || !sentence || !isValid"
         :isRunning="isRunning"
         @run="sendData"
       />

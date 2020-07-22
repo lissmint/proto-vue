@@ -52,7 +52,7 @@
       />
 
       <RunBtn
-        :disabled="isRunning || !sentence /* условия отключения кнопки */"
+        :disabled="isRunning || !sentence || !isValid"
         :isRunning="isRunning"
         @run="sendData"
       />

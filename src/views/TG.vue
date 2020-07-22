@@ -76,7 +76,7 @@
       </div>
 
       <RunBtn
-        :disabled="isRunning || !start || selected === null"
+        :disabled="isRunning || !start || selected === null || !isValid"
         :isRunning="isRunning"
         @run="sendData"
       />
