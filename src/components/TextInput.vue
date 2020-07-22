@@ -13,8 +13,14 @@
     <span
       class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
     >
-      {{ wordcount ? (value ? value.split(' ').length : '0') : value.length }} /
-      {{ wordcount ? wordcount + ' words' : maxlength }}</span
+      {{
+        wordcount
+          ? value.trim()
+            ? value.trim().split(' ').length
+            : '0'
+          : value.length
+      }}
+      / {{ wordcount ? wordcount + ' words' : maxlength }}</span
     >
   </p>
 </template>
