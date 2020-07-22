@@ -8,7 +8,7 @@
       :value="value"
       :rows="rows"
       :disabled="disabled"
-      @input="validate"
+      @input="$emit('input', $event.target.value)"
     ></textarea>
     <span
       class="w3-tag w3-light-gray w3-border-bottom w3-border-left w3-border-right"
@@ -39,22 +39,21 @@ export default {
       return this.value.length
     }
   },
-  methods: {
-    validate(e) {
-      this.$emit('input', e.target.value)
+  watch: {
+    amount: function(val) {
+      let prev = this.isValid
 
-      let vm = this
-      setTimeout(function() {
-        let prev = vm.isValid
+      if (this.wordcount) {
+        if (val > this.wordcount) this.isValid = false
+        else this.isValid = true
 
-        if (vm.wordcount) {
-          if (vm.amount > vm.wordcount) vm.isValid = false
-          else vm.isValid = true
-
-          if (vm.prev != vm.isValid) vm.$emit('setValid', vm.isValid)
-        }
-      }, 0)
+        if (prev != this.isValid) this.$emit('setValid', this.isValid)
+      }
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.isValid = true
+    next()
   }
 }
 </script>
