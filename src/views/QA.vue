@@ -76,8 +76,8 @@ export default {
     userData() {
       return {
         event: this.service.url,
-        question: this.question,
-        fragment: this.fragment
+        question: this.question.trim(),
+        fragment: this.fragment.trim()
       }
     }
   },

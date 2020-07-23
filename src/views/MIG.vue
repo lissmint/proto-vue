@@ -132,7 +132,7 @@ export default {
     userData() {
       return {
         event: this.service.url,
-        sentence: this.sentence
+        sentence: this.sentence.trim()
       }
     }
   },

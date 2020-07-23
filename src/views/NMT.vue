@@ -61,7 +61,7 @@ export default {
     userData() {
       return {
         event: this.service.url,
-        en_text: this.text
+        en_text: this.text.trim()
       }
     }
   },

@@ -152,7 +152,7 @@ export default {
         case 'tg':
           return {
             event: this.service.url,
-            start: this.start,
+            start: this.start.trim(),
             min_len: parseInt(this.min),
             max_len: parseInt(this.max),
             temperature: parseFloat(this.temperature)
