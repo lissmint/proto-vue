@@ -110,9 +110,9 @@ export default {
   },
   methods: {
     setSize(event) {
-      for (chart in this.charts) {
-        chart.chart.width = even.target.value
-        chart.chart.height = even.target.value - 50
+      for (let chart of this.charts) {
+        chart.chart.width = event.target.value
+        chart.chart.height = event.target.value - 50
       }
     },
     sendData() {
@@ -145,7 +145,7 @@ export default {
         indexes[i] = i
       }
 
-      dat = []
+      let dat = []
       for (var i = 0; i < data.mi.length; i++) {
         dat = dat.concat(data.mi[i])
       }
