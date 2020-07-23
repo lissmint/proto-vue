@@ -49,7 +49,7 @@
             type="range"
             min="300"
             max="1500"
-            value="900"
+            :value="width"
             step="150"
             class="slider"
             @input="setSize"
@@ -92,7 +92,9 @@ export default {
   data: () => ({
     // данные страницы
     sentence: '',
-    charts: []
+    charts: [],
+    width: 900,
+    height: 850
   }),
   components: {
     highcharts: Chart
@@ -110,9 +112,11 @@ export default {
   },
   methods: {
     setSize(event) {
+      this.width = event.target.value
+      this.height = this.width - 50
       for (let chart of this.charts) {
-        chart.chart.width = event.target.value
-        chart.chart.height = event.target.value - 50
+        chart.chart.width = this.width
+        chart.chart.height = this.height
       }
     },
     sendData() {
@@ -152,8 +156,8 @@ export default {
 
       this.charts.push({
         chart: {
-          width: '900',
-          height: '900',
+          width: this.width,
+          height: this.height,
           type: 'heatmap',
           marginTop: 40,
           marginBottom: 80,
