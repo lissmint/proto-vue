@@ -56,12 +56,12 @@ export default {
       let vm = this
       this.service.ws.onmessage = msg => {
         try {
-          vm.receivedData = JSON.parse(msg.data)
+          vm.receivedData = JSON.parse(msg.data.replace('\n', '\\n'))
         } catch (e) {
           console.error(e)
           console.log('received data:', msg)
           vm.receivedData = {
-            msg: 'Something went wrong'
+            msg: 'Parsing error'
           }
           vm.error = true
           vm.isRunning = false
