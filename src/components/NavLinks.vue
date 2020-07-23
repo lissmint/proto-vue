@@ -5,9 +5,10 @@
       :key="service.url"
       :to="'/' + service.familyName + '/' + service.url"
       class="item w3-bar-item w3-button w3-border-bottom"
+      :class="{ active: service.url == url }"
     >
       <div>
-        <span :class="{ active: service.url == url }">{{ service.title }}</span>
+        <span>{{ service.title }}</span>
         <span
           class="w3-tag w3-small"
           :class="{
@@ -44,6 +45,16 @@ export default {
   box-shadow: none !important;
 }
 .active {
-  font-weight: bold;
+  position: relative;
+}
+
+.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background-color: #009688;
 }
 </style>
