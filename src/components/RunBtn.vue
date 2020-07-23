@@ -9,7 +9,7 @@
     </button>
     <i
       class="fa fa-spinner w3-spin w3-center"
-      style="font-size:20px;"
+      style="font-size:20px; margin-left: 10px; vertical-align: center;"
       v-if="isRunning"
     ></i>
   </p>
