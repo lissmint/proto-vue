@@ -266,6 +266,8 @@ export default {
   },
   //reset component data fields
   beforeRouteUpdate(to, from, next) {
+    this.width = 900
+    this.height = 850
     this.sentence = ''
     this.charts = []
     next()
