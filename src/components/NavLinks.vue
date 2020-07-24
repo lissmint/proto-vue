@@ -4,10 +4,12 @@
       v-for="service in services"
       :key="service.url"
       :to="'/' + service.familyName + '/' + service.url"
-      class="item w3-bar-item w3-button w3-border-bottom"
-      :class="{ active: service.url == url }"
     >
-      <div>
+      <div
+        class="item w3-bar-item w3-button w3-border-bottom"
+        :class="{ active: service.url == url }"
+        @click="w3_close"
+      >
         <span>{{ service.title }}</span>
         <span
           class="w3-tag w3-small"
@@ -36,6 +38,13 @@ export default {
       if (this.$route.params) return this.$route.params.id
       return null
     }
+  },
+  methods: {
+    w3_close() {
+      if (window.innerWidth < 993) {
+        document.getElementById('mySidebar').style.display = 'none'
+      }
+    }
   }
 }
 </script>
@@ -56,5 +65,8 @@ export default {
   width: 5px;
   height: 100%;
   background-color: #009688;
+}
+a {
+  text-decoration: none;
 }
 </style>
