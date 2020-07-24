@@ -64,7 +64,10 @@ export default {
   }),
   computed: {
     userData() {
-      return { audio: this.audio }
+      return {
+        event: this.service.url,
+        audio: this.audio
+      }
     }
   },
   methods: {
