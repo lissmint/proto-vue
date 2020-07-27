@@ -6,9 +6,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    available: true,
     responses: 0,
     services: serviceList,
-    wsAddress: 'ws://91.238.230.147:8209/services/' // `ws://localhost:80/services/${services[s].url}/`
+    wsAddress: 'ws://91.238.230.147:8209/services/'
   },
   mutations: {
     setActive(state, { url, readyState }) {
@@ -17,6 +18,10 @@ export default new Vuex.Store({
       } else {
         state.services.find(s => s.url == url).active = false
       }
+    },
+    setAvailable(state, status) {
+      state.available = status
+      state.responses = state.services.length
     },
     setServices(state, services) {
       state.services = services
@@ -33,7 +38,8 @@ export default new Vuex.Store({
   getters: {
     activeServices: state => state.services.filter(serv => serv.active),
     allServices: state => state.services,
-    responses: state => state.responses
+    responses: state => state.responses,
+    wsAddress: state => state.wsAddress
   },
   actions: {
     sortServices({ commit, state }) {
@@ -54,10 +60,7 @@ export default new Vuex.Store({
       dispatch('sortServices')
       let services = state.services.map(a => ({ ...a }))
       for (let s in services) {
-        services[s].ws = new WebSocket(
-          state.wsAddress + services[s].url + '/'
-          // 'wss://echo.websocket.org'
-        )
+        services[s].ws = new WebSocket(state.wsAddress + services[s].url + '/')
         dispatch('subscribeSocket', {
           socket: services[s].ws,
           url: services[s].url
@@ -88,18 +91,19 @@ export default new Vuex.Store({
           console.log(
             `[close] Соединение ${url} прервано, code = ${event.code}. Попытка переподключения.`
           )
-
           let service = state.services.find(s => s.url == url)
-          service.ws = new WebSocket(state.wsAddress + url + '/')
-          dispatch('subscribeSocket', {
-            socket: service.ws,
-            url
-          })
+          setTimeout(function() {
+            service.ws = new WebSocket(state.wsAddress + url + '/')
+            service.timeout += 500
+            dispatch('subscribeSocket', {
+              socket: service.ws,
+              url
+            })
+          }, service.timeout)
         }
       }
 
       socket.onerror = function(error) {
-        console.log(`[error] ${error.message}`)
         commit('incResponses')
       }
     }
